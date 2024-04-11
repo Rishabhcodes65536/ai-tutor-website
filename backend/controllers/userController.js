@@ -17,7 +17,8 @@ class userController{
             const doc=new userModel({
                 name:req.body.name,
                 email:req.body.email,
-                password:hashed_password
+                password:hashed_password,
+                occupation:req.body.occupation
             })
             const saved=await doc.save();
             console.log(saved)
@@ -28,16 +29,20 @@ class userController{
     }
     static validateLogin=async(req,res)=>{
         try {
-            const result=await userModel.findOne({email:req.body.email})
-            
-            if(result!=null){
-                if(await bcrypt.compare(result.password,req.body.password)){
-                    res.send(`<h1>OK</h1>`)
-                }
-                else{
+            const kkk=await userModel.findOne({email:req.body.email})
+            console.log(kkk.password,req.body.password);
+
+            if(kkk!=null){
+                await bcrypt.compare(req.body.password,kkk.password,).then((resul)=>{
+                    console.log(resul)
+                    if(resul){
+                        res.redirect(`/topic`)
+                    }
+                    else{
                     res.send(`<h1>Incorrect password</h1>`)
+                    }
+                });
                 }
-            }
             else{
                 res.send(`<h1>User not yet resistered</h1>`)
             }
