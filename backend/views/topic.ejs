@@ -1,18 +1,15 @@
 <!-- views/topic.ejs -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Topic</title>
-</head>
-<body>
-    <h1>Select a Topic</h1>
-    <ul>
+<%- include("./partials/header.ejs")%>
+<%- include("./partials/navbar.ejs")%>
+
+    <h1 class="topic">Select a Topic</h1>
+    <div class="buttonWrapper">
         <% topics.forEach(topic => { %>
-            <li><a href="/answer?topic=<%= topic.name %>"><%= topic.name %></a></li>
+            <a class="btn btn-primary" href="/answer?topic=<%= topic.name %>" role="button"><%= topic.name%></a>
         <% }); %>
-    </ul>
+</div>
 </body>
 </html>
+
+<%- include('./partials/footer.ejs') %>

@@ -8,7 +8,7 @@ const port=process.env.PORT || '3000'
 const DATABASE_URI=process.env.DATABASE_URI || "mongodb://localhost:27017/"
 import connectDB from "./db/connectdb.js";
 
-
+app.use(express.static('public'))
 
 connectDB(DATABASE_URI);
 

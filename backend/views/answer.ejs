@@ -1,13 +1,7 @@
 <!-- views/answer.ejs -->
+<%- include("./partials/header.ejs")%>
+<%- include("./partials/navbar.ejs")%>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Answer</title>
-</head>
-<body>
     <h1>Submit Answer</h1>
     <form action="/answer" method="post">
         <input type="hidden" name="topic" value="<%= topic %>">
