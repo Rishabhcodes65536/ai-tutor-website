@@ -4,9 +4,9 @@
 
     <h1>Submit Answer</h1>
     <form action="/answer" method="post">
-        <input type="hidden" name="topic" value="<%= topic %>">
+        <h1><%= question %></h1>
         <label for="answer">Answer:</label>
-        <input type="text" id="answer" name="answer">
+        <input type="text" id="answer" name="solution">
         <button type="submit">Submit</button>
     </form>
 </body>
