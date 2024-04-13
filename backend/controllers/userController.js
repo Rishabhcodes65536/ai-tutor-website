@@ -13,6 +13,7 @@ class userController{
     }
     static createUserDoc = async (req,res) =>{
         try {
+            console.log(req.body);
             const hashed_password=await bcrypt.hash(req.body.password,10)
             const doc=new userModel({
                 name:req.body.name,
@@ -30,7 +31,7 @@ class userController{
     static validateLogin=async(req,res)=>{
         try {
             const kkk=await userModel.findOne({email:req.body.email})
-            console.log(kkk.password,req.body.password);
+            console.log(req.body.password);
 
             if(kkk!=null){
                 await bcrypt.compare(req.body.password,kkk.password,).then((resul)=>{

@@ -6,10 +6,18 @@ class questionContoller{
     static getTopics=async (req,res,API_ENDPOINT)=>{
     const topicId = req.params.id;
     const topics = [
-        { id: 1, name: 'Differentiation' },
-        { id: 2, name: 'Integration' },
-        { id: 3, name: 'Algebra' }
-    ];
+    { id: 1, name: 'Differentiation' },
+    { id: 2, name: 'Integration' },
+    { id: 3, name: 'Algebra' },
+    { id: 4, name: 'Geometry' },
+    { id: 5, name: 'Trigonometry' },
+    { id: 6, name: 'Calculus' },
+    { id: 7, name: 'Statistics' },
+    { id: 8, name: 'Probability' },
+    { id: 9, name: 'Linear Algebra' },
+    { id: 10, name: 'Number Theory' }
+];
+
 
     res.render('topic.ejs', { topics });
     }
@@ -19,7 +27,7 @@ class questionContoller{
             const API_ENDPOINT=req.API_ENDPOINT;
             console.log(API_ENDPOINT);
             let response = await axios.post(API_ENDPOINT, {
-            question:req.query.topic,
+            question:"integration question",
         }, {
             headers: {
                 'Content-Type': 'application/json',
