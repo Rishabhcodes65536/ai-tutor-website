@@ -4,18 +4,12 @@ const questionSchema = new mongoose.Schema({
   student_id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    auto: true 
-  },
-  question_id: {
-    type: String,
-    required: true,
-    unique: true 
   },
   question: {
     type: String,
     required: true
   },
-  response: {
+  student_response: {
     type: String,
     default: ''
   },
@@ -28,11 +22,14 @@ const questionSchema = new mongoose.Schema({
     type: Number,
     default: null
   },
-  feedback: String
+  feedback:{ 
+    type:String,
+    default:""
+    }
 }, {
   timestamps: true 
 });
 
-const questionModel = mongoose.model('Question', questionSchema);
+const questionModel = mongoose.model('Quest', questionSchema);
 
 export default questionModel;

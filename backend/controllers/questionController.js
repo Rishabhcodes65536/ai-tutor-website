@@ -17,10 +17,8 @@ class questionContoller{
     { id: 9, name: 'Linear Algebra' },
     { id: 10, name: 'Number Theory' }
 ];
-
-
-    res.render('topic.ejs', { topics });
-    }
+    res.render('topic.ejs', { topics, "id":req.query.user});
+}
     static fetchApi=async (req,res)=>{
         try {
             // console.log(req);
@@ -39,14 +37,23 @@ class questionContoller{
         // console.log(parsed_string); 
         let jsonString = response.data.response.match(/```json([\s\S]*)```/)[1].trim();
 
-    // Parsing the extracted JSON
         let parsed_string = JSON.parse(jsonString);
-    // Parsing the extracted JSON
-    // let parsed_string = JSON.parse(jsonString);
         if(parsed_string){
         console.log("YEPPP!");
         req.question=parsed_string[0].question;
         req.marks=parsed_string[0].marks;
+        res.set('question',parsed_string[0].question);
+        res.set('marks',parsed_string[0].marks);
+        console.log(res.headers);
+        // const questionDoc= new questionModel({
+        //     student_id:req.query.user,
+        //     question:parsed_string[0].question,
+        //     topic:req.query.topic,
+        //     total_marks:parsed_string[0].marks,
+        //     feedback:""
+        // })
+        // const mongodbSaving=await questionDoc.save();
+        // console.log(mongodbSaving);
         res.render('\answer.ejs',{
             "data":parsed_string[0],
             "topic":req.query.topic,
@@ -70,7 +77,7 @@ class questionContoller{
         console.log(solution,question,marks);
         // Make POST request to the API
         const SOLUTION_API=req.SOLUTION_API_ENDPOINT
-        const response = await axios.post(SOLUTION_API, {
+        const response_from_api = await axios.post(SOLUTION_API, {
             question:question,
             marks:marks,
             answer: solution
@@ -80,18 +87,26 @@ class questionContoller{
                 'Accept': '*/*'
             }
         });
-        console.log(response.data);
-        // // Extract relevant data from the API response
-        // const { status, response: apiResponse, student_answer } = response.data;
-        // console.log(status,response,student_answer)
-        // Render the answer.ejs template with the API response data
+        console.log(response_from_api.data);
+         const questionDoc= new questionModel({
+            student_id:req.query.user,
+            question:question,
+            student_response:solution,
+            topic:req.query.topic,
+            total_marks:marks,
+            allocated_marks:response_from_api.data.response.marks_awarded_to_student,
+            feedback:response_from_api.data.response.feedback
+        })
+        const mongodbSaving=await questionDoc.save();
+        console.log(mongodbSaving);
+        const obj={
+            question:question,
+            marks:marks
+        }
         res.render('answer.ejs', {
-            // topic: req.locals.item, // Assuming the topic is passed as locals.item
-            // data: { question, marks }, // Original question and marks
-            // status,
-            // marksAwarded: apiResponse.marks_awarded_to_student,
-            // feedback: apiResponse.feedback,
-            // studentAnswer: student_answer
+            "data":obj,
+            "topic":req.body.topic,
+            "abcd":response_from_api.data
         });
     } catch (error) {
         console.error('Error:', error);

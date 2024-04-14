@@ -26,7 +26,6 @@ app.use("/topic",quesRoute)
 app.use("/answer", (req, res, next) => {
     req.API_ENDPOINT =API_ENDPOINT;
     req.SOLUTION_API_ENDPOINT=SOLUTION_API_ENDPOINT;
-    // console.log(API_ENDPOINT);
     next();
 }, handlerRoute);
 

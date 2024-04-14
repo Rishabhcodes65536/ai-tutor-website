@@ -6,7 +6,7 @@
     <h1 class="topic">Select a Topic</h1>
     <div class="buttonWrapper">
         <% topics.forEach(topic => { %>
-            <a class="btn btn-primary" href="/answer?topic=<%=topic.name%>" role="button"><%= topic.name%></a>
+            <a class="btn btn-primary" href="/answer?topic=<%=topic.name%>&user=<%=id%>" role="button"><%= topic.name%></a>
         <% }); %>
 </div>
 </body>

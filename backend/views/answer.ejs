@@ -9,6 +9,7 @@
         <form class="form" method="post">
             <input type="hidden" id="question" name="question" value="<%= data.question %>">
             <input type="hidden" id="marks" name="marks" value="<%= data.marks %>">
+            <input type="hidden" id="topic" name="topic" value="<%= topic %>">
             <h1 class="title"><%= data.question %></h1>
 
             <label for="answer" class="form-label">Answer:</label>
@@ -16,6 +17,24 @@
             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
             <h3 class="marks">Marks: <%= data.marks %></h3>
         </form>
+        <% if(locals.abcd){%>
+            
+            <%if(data.marks==abcd.response.marks_awarded_to_student){%>
+                <div class="alert alert-success" role="alert">
+                    Correct Answer Hoorah!!
+                </div>
+                <div class="marks_awarded"><%=abcd.response.marks_awarded_to_student%></div>
+                <div class="feedback"><%=abcd.response.feedback%></div>
+            <%} else{%>
+            <div class="alert alert-danger" role="alert">
+                    Wrong Answer !!
+                <div class="marks_awarded"><%=abcd.response.marks_awarded_to_student%></div>
+                <div class="feedback"><%=abcd.response.feedback%></div>
+            </div>
+            
+            
+            <%}%>
+        <%}%>
     </div>
 </div>
 </body>

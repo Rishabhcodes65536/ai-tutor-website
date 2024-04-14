@@ -37,7 +37,8 @@ class userController{
                 await bcrypt.compare(req.body.password,kkk.password,).then((resul)=>{
                     console.log(resul)
                     if(resul){
-                        res.redirect(`/topic`)
+                        res.set('user_id', kkk._id);
+                        res.redirect(`/topic?user=${kkk._id}`)
                     }
                     else{
                     res.send(`<h1>Incorrect password</h1>`)
@@ -45,9 +46,8 @@ class userController{
                 });
                 }
             else{
-                res.send(`<h1>User not yet resistered</h1>`)
+                res.redirect('/register')
             }
-            res.redirect('/login')
         } catch (error) {
             console.log(error)
         }
