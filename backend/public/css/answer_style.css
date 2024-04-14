@@ -57,3 +57,17 @@ body {
             margin-top: 20px;
             text-align: center;
         }
+
+
+
+.answer_container .alert {
+    margin-bottom: 10px;
+}
+
+.marks_awarded,
+.feedback,
+.statement {
+    font-family: 'Arial', sans-serif; /* Professional-themed font */
+    text-align: center; /* Center text */
+    padding: 10px 0; /* Add padding */
+}

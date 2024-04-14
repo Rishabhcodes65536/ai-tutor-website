@@ -681,20 +681,30 @@ footer .container{
 .topic{
   margin: 5px 10px 20px 30px;
   text-align: center;
-  color: #007bff;
+  color: rgbargba(10, 15, 7, 0.68);
   margin:20px 20px 40px 25px;
   font-family: Georgia, 'Times New Roman', Times, serif;
 
 }
 
-.buttonWrapper{
- display:flex;
- flex-wrap: wrap;
- overflow: hidden;
- justify-content: space-evenly;
- margin-bottom: 100px;
+.buttonWrapper {
+    display: flex;
+    /* flex-wrap: nowrap; */
+    flex-wrap: wrap;
+    margin-left: 80px;
+    margin-right: 80px;
+    justify-content: space-around; /* Distribute items evenly */
+    margin-bottom: 100px;
 }
 
+.buttonWrapper .btn {
+    width: calc(25%); 
+    margin-bottom: 10px; /* Add some space between buttons */
+    /* width:300px;  */
+    margin-right: 20px;
+    padding: 7px;
+    background-color: rgba(62, 128, 58, 0.84);
+}
 /* a{
   text-decoration: none;
   margin:30px;

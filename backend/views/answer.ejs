@@ -11,31 +11,37 @@
             <input type="hidden" id="marks" name="marks" value="<%= data.marks %>">
             <input type="hidden" id="topic" name="topic" value="<%= topic %>">
             <h1 class="title"><%= data.question %></h1>
-
+            <%if(!locals.abcd){%>
             <label for="answer" class="form-label">Answer:</label>
             <input type="text" id="answer" name="solution" class="form-control form-input" placeholder="Enter your answer here">
             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+            <%}%>
             <h3 class="marks">Marks: <%= data.marks %></h3>
         </form>
         <% if(locals.abcd){%>
-            
+
             <%if(data.marks==abcd.response.marks_awarded_to_student){%>
                 <div class="alert alert-success" role="alert">
-                    Correct Answer Hoorah!!
+                    Correct Answer Hoorah 🥳!!
                 </div>
-                <div class="marks_awarded"><%=abcd.response.marks_awarded_to_student%></div>
-                <div class="feedback"><%=abcd.response.feedback%></div>
+                <div class="marks_awarded">Marks awarded:<%=abcd.response.marks_awarded_to_student%></div>
+                <div class="feedback">
+                <div class="api-feedback"><%=abcd.response.feedback%></div>
+                <div class="statement">The answer you gave was <%=user_solution%></div>
+                </div>
+                
             <%} else{%>
             <div class="alert alert-danger" role="alert">
-                    Wrong Answer !!
-                <div class="marks_awarded"><%=abcd.response.marks_awarded_to_student%></div>
+                    Wrong Answer 😔!!
+                <div class="marks_awarded">Marks awarded:<%=abcd.response.marks_awarded_to_student%></div>
                 <div class="feedback"><%=abcd.response.feedback%></div>
             </div>
-            
-            
             <%}%>
         <%}%>
     </div>
 </div>
+
 </body>
 </html>
+
+<%- include("./partials/footer.ejs") %>

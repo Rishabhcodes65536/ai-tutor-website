@@ -106,7 +106,8 @@ class questionContoller{
         res.render('answer.ejs', {
             "data":obj,
             "topic":req.body.topic,
-            "abcd":response_from_api.data
+            "abcd":response_from_api.data,
+            "user_solution":solution
         });
     } catch (error) {
         console.error('Error:', error);
