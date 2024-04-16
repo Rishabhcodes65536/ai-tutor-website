@@ -4,8 +4,15 @@ import quesRoute from "./routes/questionRoute.js"
 import handlerRoute from "./routes/handlerRoute.js"
 import dotenv from "dotenv"
 
-
 dotenv.config();
+
+//session feature
+
+import session from "express-session";
+import connectMongo from "connect-mongo";
+
+// Create a MongoStore instance to store sessions in MongoDB
+const MongoStore = connectMongo(session);
 
 const app=express()
 const port=process.env.PORT || '3000'
@@ -15,6 +22,18 @@ console.log(API_ENDPOINT)
 const DATABASE_URI=process.env.DATABASE_URI || "mongodb://localhost:27017/"
 import connectDB from "./db/connectdb.js";
 
+
+//session middleware
+
+app.use(session({
+    secret: process.env.secret_key, // Change this to a secure key
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ url: DATABASE_URI }), // Store session data in MongoDB
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000, // Session expires after 24 hours
+    }
+}));
 
 
 app.use(express.static('public'))

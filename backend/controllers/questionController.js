@@ -89,7 +89,7 @@ class questionContoller{
         });
         console.log(response_from_api.data);
          const questionDoc= new questionModel({
-            student_id:req.query.user,
+            student_id:req.session._id,
             question:question,
             student_response:solution,
             topic:req.query.topic,

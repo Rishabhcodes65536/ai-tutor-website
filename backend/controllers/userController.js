@@ -9,7 +9,13 @@ class userController{
         res.render("register.ejs")
     }
     static login =(req,res)=>{
-        res.render("login.ejs")
+        if (req.session.userId) {
+            // Redirect authenticated users to another page
+            res.redirect('/topic');
+        }
+        else{
+        res.render("login.ejs");
+        }
     }
     static createUserDoc = async (req,res) =>{
         try {
@@ -37,6 +43,7 @@ class userController{
                 await bcrypt.compare(req.body.password,kkk.password,).then((resul)=>{
                     console.log(resul)
                     if(resul){
+                        req.session.userId = kkk._id;
                         res.set('user_id', kkk._id);
                         res.redirect(`/topic?user=${kkk._id}`)
                     }
