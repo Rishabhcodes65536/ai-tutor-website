@@ -1,15 +1,39 @@
-<!-- views/topic.ejs -->
+<%- include("./partials/header.ejs") %>
 
-<%- include("./partials/header.ejs")%>
-<%- include("./partials/navbar.ejs")%>
+<section class=" d-flex align-items-stretch">
+  <%- include("./partials/side_navbar.ejs") %>
+  
+  <div class="main-content flex-grow-1 d-flex justify-content-center align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center mt-5">
+          <h1 class="quiz-heading">Ranveer, let's dive deeper with Answer mode</h1>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12 text-center">
+          <p>Ready to test your knowledge and get instant feedback?</p>
+          <p>Answer Mode provides you with practice questions on a variety of topics.</p>
+          <p>Choose your subject below, answer the questions, and Knolly will:</p>
+          <ul class="list-unstyled">
+            <li>Mark your work and explain the answers clearly. ✅</li>
+            <li>Identify any areas you might need to brush up on. 🔍</li>
+          </ul>
+          <p class="mt-4">Select a topic to get started!</p>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12 text-center">
+          <h1 class="topic">Select a Topic</h1>
+          <div class="buttonWrapper">
+            <% topics.forEach(topic => { %>
+              <a class="btn custom-btn" href="/answer?topic=<%= topic.name %>&user=<%= id %>" role="button"><%= topic.name %></a>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <h1 class="topic">Select a Topic</h1>
-    <div class="buttonWrapper">
-        <% topics.forEach(topic => { %>
-            <a class="btn btn-primary" href="/answer?topic=<%=topic.name%>&user=<%=id%>" role="button"><%= topic.name%></a>
-        <% }); %>
-</div>
-</body>
-</html>
-
-<%- include('./partials/footer.ejs') %>
+<%- include("./partials/footer.ejs") %>

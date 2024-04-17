@@ -1,11 +1,14 @@
 <!-- views/answer.ejs -->
 <%- include("./partials/header.ejs")%>
+<section class="d-flex align-items-stretch">
+<%- include("./partials/side_navbar.ejs")%>
 
-<%- include("./partials/navbar.ejs")%>
-
-<div class="container-wrapper">
+<div class="container question-content-wrapper">
+    <div class="top-bar d-flex align-items-center mb-4 questionheader justify-content-between">
+            <h1 class="title-question">Question on <%= topic %></h1>
+            <a href="/topic" class="btn btn-outline-secondary">Back</a>
+    </div>
     <div class="answer_container">
-        <h1 class="title">Question on <%= topic %></h1>
         <form class="form" method="post">
             <input type="hidden" id="question" name="question" value="<%= data.question %>">
             <input type="hidden" id="marks" name="marks" value="<%= data.marks %>">
@@ -40,7 +43,7 @@
         <%}%>
     </div>
 </div>
-
+</section>
 </body>
 </html>
 

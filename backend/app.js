@@ -3,6 +3,8 @@ import web from "./routes/userRoute.js"
 import quesRoute from "./routes/questionRoute.js"
 import handlerRoute from "./routes/handlerRoute.js"
 import dotenv from "dotenv"
+import quizRoute from "./routes/quizRoute.js"
+
 
 dotenv.config();
 
@@ -49,6 +51,7 @@ app.use("/answer", (req, res, next) => {
     req.SOLUTION_API_ENDPOINT=SOLUTION_API_ENDPOINT;
     next();
 }, handlerRoute);
+app.use("/quiz",quizRoute)
 
 
 app.listen(port,() =>{
