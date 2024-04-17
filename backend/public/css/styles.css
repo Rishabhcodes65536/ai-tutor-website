@@ -438,7 +438,8 @@ footer {
   background: #333;
   color: #fff;
   display: flex;
-  padding: 20px 0;
+  margin-top: 100px;
+  /* padding: 20px 0; */
 }
 
 footer .container{
@@ -711,3 +712,105 @@ footer .container{
 } */
 
 
+.container {
+  padding: 40px;
+}
+
+.custom-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #007bff; /* Blue color */
+  text-decoration: none;
+}
+
+.custom-btn:hover {
+  background-color: #0056b3; /* Darker blue color on hover */
+}
+
+/* sidebar */
+
+/* Custom styles */
+body, html {
+  height: 100%;
+}
+
+.navbar-toggler {
+  border: none;
+}
+.navbar-brand {
+  font-weight: bold;
+}
+
+.navbar-toggler-icon {
+  background-color: white;
+}
+
+
+.sidebar {
+  width: 150px; /* Adjust width as needed */
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #302447; /* violetish dark color */
+  overflow-x: hidden;
+  transition: width 0.5s ease;
+  z-index: 1;
+  padding:20px;
+}
+
+.main-content {
+  flex: 1;
+  margin-left:250px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 40%;
+    align-items: flex-start;
+  }
+}
+
+.flex-column{
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+} 
+
+.container {
+  margin-left: 550px; /* Adjust to match sidebar width */
+}
+
+.question-content-wrapper{
+   display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    height: 100vh;
+    flex-direction: column; 
+}
+
+.title-question{
+  margin-right: 90px;
+}
+
+.nav-item img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 50%; */
+}
+.nav-item-logo{
+  margin-bottom: 100px;
+}
+
+.quiz-heading{
+  margin-top: 50px;
+}

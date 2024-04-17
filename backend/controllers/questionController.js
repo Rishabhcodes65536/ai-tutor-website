@@ -3,6 +3,9 @@ import axios from "axios"
 import questionModel from "../models/question.js";
 
 class questionContoller{
+    static getModes=async (req,res)=>{
+        res.render('quiz.ejs');
+    }
     static getTopics=async (req,res,API_ENDPOINT)=>{
     const topicId = req.params.id;
     const topics = [
@@ -17,7 +20,9 @@ class questionContoller{
     { id: 9, name: 'Linear Algebra' },
     { id: 10, name: 'Number Theory' }
 ];
-    res.render('topic.ejs', { topics, "id":req.query.user});
+console.log(req.session._id);
+    res.render('topic.ejs', { topics, "id":req.session._id});
+    // res.render('dashboard.ejs',{"user":req.session._id});
 }
     static fetchApi=async (req,res)=>{
         try {

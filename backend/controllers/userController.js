@@ -9,8 +9,8 @@ class userController{
         res.render("register.ejs")
     }
     static login =(req,res)=>{
-        if (req.session.userId) {
-            // Redirect authenticated users to another page
+        if (req.session._id) {
+            
             res.redirect('/topic');
         }
         else{
@@ -43,7 +43,7 @@ class userController{
                 await bcrypt.compare(req.body.password,kkk.password,).then((resul)=>{
                     console.log(resul)
                     if(resul){
-                        req.session.userId = kkk._id;
+                        req.session._id = kkk._id;
                         res.set('user_id', kkk._id);
                         res.redirect(`/topic?user=${kkk._id}`)
                     }
