@@ -33,9 +33,10 @@ app.use(session({
     saveUninitialized: false,
     store: new MongoStore({ url: DATABASE_URI }), // Store session data in MongoDB
     cookie: {
-        maxAge: 24 * 60 * 60 * 1000, // Session expires after 24 hours
+        maxAge: 60 * 60 * 1000, // Session expires after 1 hours
     }
 }));
+
 
 
 app.use(express.static('public'))
@@ -43,6 +44,7 @@ app.use(express.static('public'))
 connectDB(DATABASE_URI);
 
 app.use(express.urlencoded({extended:false}))
+
 
 app.use("/",web)
 app.use("/topic",quesRoute)

@@ -2,9 +2,18 @@ import mongoose from "mongoose"
 import axios from "axios"
 import questionModel from "../models/question.js";
 
+
+
 class questionContoller{
     static getModes=async (req,res)=>{
-        res.render('quiz.ejs');
+        if (req.session._id) {
+            res.render('quiz.ejs',{
+                "user":req.session.name
+            });
+        }
+        else{
+        res.render("login.ejs");
+        }
     }
     static getTopics=async (req,res,API_ENDPOINT)=>{
     const topicId = req.params.id;
@@ -19,9 +28,15 @@ class questionContoller{
     { id: 8, name: 'Probability' },
     { id: 9, name: 'Linear Algebra' },
     { id: 10, name: 'Number Theory' }
-];
-console.log(req.session._id);
-    res.render('topic.ejs', { topics, "id":req.session._id});
+    ];
+    console.log(req.session._id);
+    if (req.session._id) {
+            res.render('topic.ejs', { topics, "id":req.session._id,"user":req.session.name});
+    }
+    else{
+        res.render("login.ejs");
+    }
+
     // res.render('dashboard.ejs',{"user":req.session._id});
 }
     static fetchApi=async (req,res)=>{
@@ -76,6 +91,9 @@ console.log(req.session._id);
     static handleSolution=async (req,res)=>{
         try {
         // Extract data from the form submission
+        if (!req.session._id) {
+            res.render('login.ejs');
+        }
         console.log(req.body);
         const {solution,question,marks} = req.body;
         // const { question, marks } = req.body;
