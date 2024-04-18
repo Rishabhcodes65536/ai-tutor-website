@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="row mt-4">
-        <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center Content">
           <p>Ready to test your knowledge and get instant feedback?</p>
           <p>Answer Mode provides you with practice questions on a variety of topics.</p>
           <p>Choose your subject below, answer the questions, and Knolly will:</p>
@@ -27,7 +27,7 @@
           <h1 class="topic">Select a Topic</h1>
           <div class="buttonWrapper">
             <% topics.forEach(topic => { %>
-              <a class="btn custom-btn" href="/answer?topic=<%= topic.name %>&user=<%= id %>" role="button"><%= topic.name %></a>
+              <a class="custom-btn" href="/answer?topic=<%= topic.name %>&user=<%= id %>" role="button"><%= topic.name %></a>
             <% }); %>
           </div>
         </div>
