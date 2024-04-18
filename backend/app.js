@@ -4,7 +4,7 @@ import quesRoute from "./routes/questionRoute.js"
 import handlerRoute from "./routes/handlerRoute.js"
 import dotenv from "dotenv"
 import quizRoute from "./routes/quizRoute.js"
-
+import logoutRoute from "./routes/logoutRoute.js"
 
 dotenv.config();
 
@@ -54,6 +54,7 @@ app.use("/answer", (req, res, next) => {
     next();
 }, handlerRoute);
 app.use("/quiz",quizRoute)
+app.use("/logout",logoutRoute);
 
 
 app.listen(port,() =>{

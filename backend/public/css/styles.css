@@ -90,7 +90,7 @@ h6 {
   letter-spacing: 2px;
   color: var(--heading-color);
 }
-
+ 
 .header .btn-getstarted,
 .header .btn-getstarted:focus {
   color: var(--contrast-color);
@@ -719,17 +719,17 @@ footer .container{
 .custom-btn {
   display: inline-block;
   padding: 10px 20px;
-  margin: 10px;
+  margin: 15px;
   font-size: 18px;
   border: none;
   border-radius: 5px;
   color: #fff;
-  background-color: #007bff; /* Blue color */
+  background-color: #302447; /* Blue color */
   text-decoration: none;
 }
 
 .custom-btn:hover {
-  background-color: #0056b3; /* Darker blue color on hover */
+  background-color: #180e43d0; /* Darker blue color on hover */
 }
 
 /* sidebar */
@@ -771,9 +771,14 @@ body, html {
 
 @media (max-width: 768px) {
   .sidebar {
-    width: 40%;
+    width: 20%;
     align-items: flex-start;
   }
+
+}
+
+body {
+    background-color: #f2f2f2 !important;/* Light gray background */
 }
 
 .flex-column{
@@ -813,4 +818,28 @@ body, html {
 
 .quiz-heading{
   margin-top: 50px;
+}
+
+/* Bootstrap animations on hovers */
+.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Change background color on hover */
+    transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+.nav-item a:hover {
+    color: #fff; /* Change text color on hover */
+    transition: color 0.3s ease; /* Add transition effect */
+}
+
+.sidebar {
+    /* Your existing styles */
+    border-top-right-radius: 15px; /* Apply border radius */
+    border-bottom-right-radius: 15px; /* Apply border radius */
+}
+
+.Content p{
+  color: rgba(var(--default-color-rgb), 0.7);
+  margin: 5px 0 20px 0;
+  font-size: 20px;
+  font-weight: 400;
 }
