@@ -10,8 +10,9 @@ class userController{
     }
     static login =(req,res)=>{
         if (req.session._id) {
-            
-            res.redirect('/topic');
+            res.render('dashboard.ejs',{
+                "user":req.session.name
+            });
         }
         else{
         res.render("login.ejs");
@@ -44,6 +45,7 @@ class userController{
                     console.log(resul)
                     if(resul){
                         req.session._id = kkk._id;
+                        req.session.name= kkk.name;
                         res.set('user_id', kkk._id);
                         res.redirect(`/topic?user=${kkk._id}`)
                     }
