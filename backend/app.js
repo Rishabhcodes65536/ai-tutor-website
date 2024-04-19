@@ -5,6 +5,9 @@ import handlerRoute from "./routes/handlerRoute.js"
 import dotenv from "dotenv"
 import quizRoute from "./routes/quizRoute.js"
 import logoutRoute from "./routes/logoutRoute.js"
+import dashboardRoute from "./routes/dasboardRoute.js"
+import path from 'path';
+const __dirname = path.resolve();
 
 dotenv.config();
 
@@ -37,9 +40,10 @@ app.use(session({
     }
 }));
 
+app.set('view engine', 'ejs');
 
-
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')));
+console.log(path.join(__dirname, 'public'))
 
 connectDB(DATABASE_URI);
 
@@ -55,6 +59,8 @@ app.use("/answer", (req, res, next) => {
 }, handlerRoute);
 app.use("/quiz",quizRoute)
 app.use("/logout",logoutRoute);
+
+app.use("/dashboard",dashboardRoute);
 
 
 app.listen(port,() =>{

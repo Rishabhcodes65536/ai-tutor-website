@@ -1,0 +1,83 @@
+<%- include('./partials/header.ejs') %>
+<script type="text/javascript">
+
+google.charts.load('current', {'packages':['corechart']});
+
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+
+  // Create the data table.
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Topping');
+  data.addColumn('number', 'Slices');
+  data.addRows([
+    ['Rightanswer', <%= Right %>],
+    ['Wronganswer', <%= Wrong %>],
+    ['NA', <%= NA %>]
+  ]);
+
+  // Set chart options
+  var options = {'title':'How Much Pizza I Ate Last Night',
+                 'width':400,
+                 'height':300};
+
+  // Instantiate and draw our chart, passing in some options.
+  var chart = new google.visualization.PieChart(document.getElementById('chartts_div'));
+  chart.draw(data, options);
+}
+</script>
+
+  </head>
+
+<body>
+
+<section class="dashboard">
+  <!-- Side Navbar -->
+  <%- include('./partials/side_navbar.ejs') %>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Professional Navbar -->
+    <nav class="custom-navbar navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/dashboard.ejs">Overall Performance</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Subject Mastery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Practice Activity</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Efficiency</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Container with Paragraph -->
+    <div class="custom-container py-4">
+      <p>Track the total number of questions attempted and answered correctly across Answer Mode and Metacognition Mode.</p>
+      
+    </div>
+
+    <!-- Donut Chart -->
+    <div class="custom-container">
+      <div id="chartts_div"></div>
+    </div>
+
+    <!-- Key Statistics -->
+    <div class="custom-container py-4">
+      <h4>Key Statistics:</h4>
+      <p>Display the total number of questions attempted and answered correctly alongside the percentage.</p>
+      <!-- Add statistics here -->
+    </div>
+  </div>
+</section>
+
+
+<%- include('./partials/footer.ejs') %>
+
+

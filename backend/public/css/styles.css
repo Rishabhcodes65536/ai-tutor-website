@@ -753,15 +753,15 @@ body, html {
 
 .sidebar {
   width: 150px; /* Adjust width as needed */
-  height: 100%;
-  position: fixed;
+  height: 100% !important;
+  position: fixed !important;
   top: 0;
   left: 0;
-  background-color: #302447; /* violetish dark color */
-  overflow-x: hidden;
-  transition: width 0.5s ease;
-  z-index: 1;
-  padding:20px;
+  background-color: #302447 !important; /* violetish dark color */
+  overflow-x: hidden !important;
+  transition: width 0.5s ease !important;
+  z-index: 1 !important;
+  padding:20px !important;
 }
 
 .main-content {
@@ -843,3 +843,30 @@ body {
   font-size: 20px;
   font-weight: 400;
 }
+
+
+/* Custom CSS styles */
+.dashboard {
+  display: flex;
+  align-items: stretch;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.custom-navbar {
+  margin-bottom: 20px;
+}
+
+.custom-container {
+  margin-bottom: 20px;
+}
+
+.py-4 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+/* Add any additional CSS styles as needed */

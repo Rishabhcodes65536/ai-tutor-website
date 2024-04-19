@@ -47,7 +47,7 @@ class userController{
                         req.session._id = kkk._id;
                         req.session.name= kkk.name;
                         res.set('user_id', kkk._id);
-                        res.redirect(`/topic?user=${kkk._id}`)
+                        res.redirect(`/dashboard`);
                     }
                     else{
                     res.send(`<h1>Incorrect password</h1>`)

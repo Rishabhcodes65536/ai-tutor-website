@@ -17,7 +17,8 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "mongoose": "^8.3.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "url": "^0.11.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
