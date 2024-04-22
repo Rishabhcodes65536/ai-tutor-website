@@ -1,83 +1,89 @@
 <%- include('./partials/header.ejs') %>
 <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart2);
+    
+    function drawChart() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+            ['Right', <%= Right %>],
+            ['Wrong', <%= Wrong %>],
+            ['NA', <%= NA %>]
+        ]);
 
-google.charts.load('current', {'packages':['corechart']});
+        // Set chart options
+        var options = {'title':'Answer Mode',
+                       'width':350,
+                       'height':400};
 
-google.charts.setOnLoadCallback(drawChart);
-function drawChart() {
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('charts_div'));
+        chart.draw(data, options);
+    }
 
-  // Create the data table.
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Topping');
-  data.addColumn('number', 'Slices');
-  data.addRows([
-    ['Rightanswer', <%= Right %>],
-    ['Wronganswer', <%= Wrong %>],
-    ['NA', <%= NA %>]
-  ]);
+    function drawChart2() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+            ['Right', 3],
+            ['Wrong', 1],
+            ['NA', 0]
+        ]);
 
-  // Set chart options
-  var options = {'title':'How Much Pizza I Ate Last Night',
-                 'width':400,
-                 'height':300};
+        // Set chart options
+        var options = {'title':'Metacognition Mode',
+                       'width':350,
+                       'height':400};
 
-  // Instantiate and draw our chart, passing in some options.
-  var chart = new google.visualization.PieChart(document.getElementById('chartts_div'));
-  chart.draw(data, options);
-}
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('charts_div2'));
+        chart.draw(data, options);
+    }
 </script>
-
-  </head>
-
+</head>
 <body>
 
-<section class="dashboard">
-  <!-- Side Navbar -->
-  <%- include('./partials/side_navbar.ejs') %>
+<section class="d-flex flex-column align-items-stretch">
+    <!-- Include the sidebar -->
+    <%- include("./partials/side_navbar.ejs") %>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Professional Navbar -->
-    <nav class="custom-navbar navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/dashboard.ejs">Overall Performance</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Subject Mastery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Practice Activity</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Efficiency</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <%- include("./partials/dashboard_navbar.ejs") %>
 
-    <!-- Container with Paragraph -->
-    <div class="custom-container py-4">
-      <p>Track the total number of questions attempted and answered correctly across Answer Mode and Metacognition Mode.</p>
-      
+        <!-- Main content -->
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-md-9">
+                    <!-- Track total questions attempted -->
+                    <p>Track the total number of questions attempted and answered correctly across Answer Mode and Metacognition Mode.</p>
+                    <!-- Pie chart for Answer Mode -->
+                    <div class="chartwrapper">
+                    <div id="charts_div" ></div>
+                    <div id="charts_div2"></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <!-- Pie chart for Metacognition Mode -->
+                    <!-- Sidebar2 -->
+                    <div class="sidebar2">
+                        <nav class="py-4">
+                            <ul class="nav flex-column">
+                                <li class="mb-2">Top Knolly Students this Month</li>
+                                <li>Sanyam Singh</li>
+                                <li>Rishabh Jain</li>
+                                <li>Test_knolly</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Donut Chart -->
-    <div class="custom-container">
-      <div id="chartts_div"></div>
-    </div>
-
-    <!-- Key Statistics -->
-    <div class="custom-container py-4">
-      <h4>Key Statistics:</h4>
-      <p>Display the total number of questions attempted and answered correctly alongside the percentage.</p>
-      <!-- Add statistics here -->
-    </div>
-  </div>
 </section>
 
-
 <%- include('./partials/footer.ejs') %>
-
-

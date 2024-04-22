@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const questionSchema = new mongoose.Schema({
   student_id: {
@@ -15,17 +15,15 @@ const questionSchema = new mongoose.Schema({
   },
   topic: String,
   total_marks: {
-    type: Number,
-    default: null
+    type: Number, // Corrected type definition
   },
   allocated_marks: {
-    type: Number,
-    default: null
+    type: Number, // Corrected type definition
   },
-  feedback:{ 
-    type:String,
-    default:""
-    }
+  feedback: { 
+    type: String,
+    default: ""
+  }
 }, {
   timestamps: true 
 });

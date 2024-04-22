@@ -1,2 +1,60 @@
+<%- include("./partials/header.ejs") %>
 </head>
 <body>
+
+<section class="dashboard d-flex">
+    <!-- Side Navbar -->
+    <%- include('./partials/side_navbar.ejs') %>
+
+    <!-- Main Content -->
+    <%-include('./partials/dashboard_navbar.ejs')%>
+
+        <div class="container bg-light p-4" style="flex-grow: 1;">
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <h2>Track the completion rate of practice questions and performance within each topic</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead class="visually-hidden">
+                            <tr>
+                                <th>Subject</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% accuracyData.forEach(topic => { %>
+                            <tr>
+                                <td><%= topic.topic %></td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar <%= topic.accuracy < 20 ? 'red' : topic.accuracy < 40 ? 'yellow' : topic.accuracy < 60 ? 'green' : topic.accuracy < 80 ? 'light-green' : 'dark-green' %>" role="progressbar" style="width: <%= topic.accuracy %>%;"></div>
+                                        <span class="progress-label"><%= topic.accuracy %>%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- What Knolly Thinks Sidebar -->
+    <div class="sidebar2" style="margin-left: auto;margin-top: 180px">
+        <nav class="py-4">
+            <ul class="nav flex-column">
+                <li class="mb-2">What Knolly thinks</li>
+                <li>Let's dive deeper into your subjects! You've aced Algebra with an impressive 74% score.</li>
+                <li>Looks like you need a little more practice in probability.</li>
+                <li>Don't worry, Knolly has tons of practice questions to help you improve!</li>
+                <!-- Link to specific subject practice questions -->
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<%- include("./partials/footer.ejs") %>

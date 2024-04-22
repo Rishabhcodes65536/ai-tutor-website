@@ -1,2 +1,60 @@
+<%- include('./partials/header.ejs') %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var topicData = <%- JSON.stringify(topicData) %>;
+        var metacognitionData = <%- JSON.stringify(metacognitionData) %>;
+        var topicVariables = <%- JSON.stringify(topicVariables) %>;
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topic');
+        data.addColumn('number', 'Answer Mode');
+        data.addColumn('number', 'Metacognition Mode');
+
+
+        topicVariables.forEach(topicVariable => {
+            data.addRow([topicVariable, topicData[topicVariable],metacognitionData[topicVariable]]);
+        });
+        var options = {
+            chart: {
+                title: 'Practice Activity',
+                subtitle: 'Number of Questions Attempted in Answer Mode and Metacognition Mode'
+            },
+            colors: ['#0094FF', '#FF0000']
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('answerModeChart'));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+    </script>
 </head>
 <body>
+<section class="d-flex flex-column align-items-stretch">
+    <!-- Include the sidebar -->
+    <%- include("./partials/side_navbar.ejs") %>
+
+    <%- include("./partials/dashboard_navbar.ejs") %>
+
+        <!-- Main content -->
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-md-9">
+                    <!-- Bar chart -->
+                    <div id="answerModeChart" style="height: 400px;"></div>
+                </div>
+                <div class="col-md-3 sidebar2">
+                    <!-- What Knolly Thinks -->
+                    <div class="what-knolly-thinks">
+                        <h3>What Knolly Thinks</h3>
+                        <p>Knolly suggests practicing more in the areas where you need improvement. Keep up the good work!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include("./partials/footer.ejs") %>

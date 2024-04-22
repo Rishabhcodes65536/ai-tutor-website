@@ -752,12 +752,12 @@ body, html {
 
 
 .sidebar {
-  width: 150px; /* Adjust width as needed */
+  width: 110px; /* Adjust width as needed */
   height: 100% !important;
   position: fixed !important;
   top: 0;
   left: 0;
-  background-color: #302447 !important; /* violetish dark color */
+  background-color: #2A3891 !important; /* violetish dark color */
   overflow-x: hidden !important;
   transition: width 0.5s ease !important;
   z-index: 1 !important;
@@ -870,3 +870,60 @@ body {
 }
 
 /* Add any additional CSS styles as needed */
+
+
+.sidebar2 {
+    flex: 0 0 200px; /* Set the width of the sidebar */
+    background-color: #f8f9fa; /* Set the background color */
+    padding: 20px; /* Add some padding */
+    border-left: 1px solid #dee2e6; /* Add a border to separate it from the main content */
+}
+
+.sidebar2 ul {
+    list-style-type: none; /* Remove default list styles */
+    padding: 0; /* Remove default padding */
+}
+
+.progress {
+    height: 20px; /* Set the height of the progress bar */
+    margin-bottom: 10px; /* Add some space between progress bars */
+}
+
+
+ .progress-bar.red {
+        background-color: red;
+    }
+    .progress-bar.yellow {
+        background-color: yellow;
+    }
+    .progress-bar.green {
+        background-color: green;
+    }
+    .progress-bar.light-green {
+        background-color: lightgreen;
+    }
+    .progress-bar.dark-green {
+        background-color: darkgreen;
+    }
+
+    .header-container {
+        padding-top: 20px; /* Adjust as needed */
+        padding-bottom: 20px; /* Adjust as needed */
+    }
+
+    .navbar-container {
+        margin-bottom: 20px; /* Adjust as needed */
+    }
+
+    .navbarsactive {
+        background-color: #2A3891;
+        color: white;
+    }
+
+    .chartwrapper {
+    display: flex;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* gap:20px; */
+}
+
