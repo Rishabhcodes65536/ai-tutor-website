@@ -6,14 +6,9 @@ import questionModel from "../models/question.js";
 
 class questionContoller{
     static getModes=async (req,res)=>{
-        if (req.session._id) {
-            res.render('quiz.ejs',{
-                "user":req.session.name
-            });
-        }
-        else{
-        res.render("login.ejs");
-        }
+        res.render('quiz.ejs',{
+            "user":req.session.name
+        });
     }
     static getTopics=async (req,res,API_ENDPOINT)=>{
     const topicId = req.params.id;
@@ -65,15 +60,6 @@ class questionContoller{
         res.set('question',parsed_string[0].question);
         res.set('marks',parsed_string[0].marks);
         console.log(res.headers);
-        // const questionDoc= new questionModel({
-        //     student_id:req.query.user,
-        //     question:parsed_string[0].question,
-        //     topic:req.query.topic,
-        //     total_marks:parsed_string[0].marks,
-        //     feedback:""
-        // })
-        // const mongodbSaving=await questionDoc.save();
-        // console.log(mongodbSaving);
         res.render('\answer.ejs',{
             "data":parsed_string[0],
             "topic":req.query.topic,
@@ -91,9 +77,7 @@ class questionContoller{
     static handleSolution=async (req,res)=>{
         try {
         // Extract data from the form submission
-        if (!req.session._id) {
-            res.render('login.ejs');
-        }
+        
         console.log(req.body);
         const {solution,question,marks} = req.body;
         // const { question, marks } = req.body;

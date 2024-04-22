@@ -2,6 +2,10 @@ import express from "express";
 const router = express.Router();
 import dashboardController from "../controllers/dashboardController.js";
 
+import sessionCheckMiddleware from "../middlewares/sessioncheck.js";
+
+router.use(sessionCheckMiddleware);
+
 
 router.get('/', (req, res) => {
     const { page } = req.query;

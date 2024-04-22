@@ -44,7 +44,8 @@ class dashboardController{
             "Right":chartData[0].value,
             "Wrong":chartData[1]['value'],
             "NA":chartData[2]['value'],
-            "page_id":'1'
+            "page_id":'1',
+            "name":req.session.name
         })
     } catch (error) {
         console.error('Error fetching question stats:', error);
@@ -72,14 +73,15 @@ class dashboardController{
             const questions = await questionModel.find({ topic: topic.name });
             const correctQuestions = questions.filter(question => question.total_marks === question.allocated_marks).length;
 
-            const accuracy = totalQuestions > 0 ? (correctQuestions / totalQuestions) * 100 : 0;
+            const accuracy = Math.ceil(totalQuestions > 0 ? (correctQuestions / totalQuestions) * 100 : 0);
             accuracyData.push({ topic: topic.name, accuracy: accuracy });
         }
 
         console.log(accuracyData);
         res.render('dashboardtwo.ejs', { 
             accuracyData: accuracyData,
-            "page_id":"2"
+            "page_id":"2",
+            "name":req.session.name
          });
     } catch (error) {
         console.error('Error:', error);
@@ -111,7 +113,8 @@ static getPracticeActivityData = async (req, res) => {
                 topicData: topicData,
                 metacognitionData: metacognitionData, // Pass metacognition data to frontend
                 topicVariables: Object.keys(topicData), // Pass array of topic variable names
-                "page_id": "3"
+                "page_id": "3",
+                "name":req.session.name
             });
         } catch (error) {
             console.error('Error fetching practice activity data:', error);

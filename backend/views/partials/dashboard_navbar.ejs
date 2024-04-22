@@ -1,7 +1,7 @@
 <div class="main-content flex-grow-1 d-flex flex-column align-items-start">
         <!-- Welcome back header -->
         <header>
-            <h1>Welcome back  Rishabh </h1>
+            <h1>Welcome back  <%=name%> </h1>
             <hr>
         </header>
 
@@ -13,16 +13,16 @@
                     <!-- Navigation items -->
                     <!-- Add "Dashboard" -->
                     <li class="nav-item <%= page_id == '1' ? 'navbarsactive' : '' %>">
-                        <a class="nav-link" href="/dashboard?page=1">Overall Performance</a>
+                        <a class="nav-link dash-nav" href="/dashboard?page=1">Overall Performance</a>
                     </li>
                     <li class="nav-item <%= page_id == '2' ? 'navbarsactive' : '' %>">
-                        <a class="nav-link" href="/dashboard?page=2">Subject Mastery</a>
+                        <a class="nav-link dash-nav" href="/dashboard?page=2">Subject Mastery</a>
                     </li>
                     <li class="nav-item <%= page_id == '3' ? 'navbarsactive' : '' %>">
-                        <a class="nav-link" href="/dashboard?page=3">Practice Activity</a>
+                        <a class="nav-link dash-nav" href="/dashboard?page=3">Practice Activity</a>
                     </li>
                     <li class="nav-item <%= page_id == '4' ? 'navbarsactive' : '' %>">
-                        <a class="nav-link" href="/dashboard?page=4">Efficiency</a>
+                        <a class="nav-link dash-nav" href="/dashboard?page=4">Efficiency</a>
                     </li>
                 </ul>
             </div>

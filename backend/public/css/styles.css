@@ -732,6 +732,13 @@ footer .container{
   background-color: #180e43d0; /* Darker blue color on hover */
 }
 
+.Input-Box{
+  height:200px;
+  margin-bottom: 18px;
+  margin-left:10px;
+  border-width: 2px;
+  
+}
 /* sidebar */
 
 /* Custom styles */
@@ -766,7 +773,8 @@ body, html {
 
 .main-content {
   flex: 1;
-  margin-left:250px;
+  margin-left:150px;
+  margin-top:50px;
 }
 
 @media (max-width: 768px) {
@@ -791,7 +799,7 @@ body {
 } 
 
 .container {
-  margin-left: 550px; /* Adjust to match sidebar width */
+  margin-left: 250px; /* Adjust to match sidebar width */
 }
 
 .question-content-wrapper{
@@ -822,7 +830,7 @@ body {
 
 /* Bootstrap animations on hovers */
 .nav-item:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Change background color on hover */
+    background-color: rgba(255, 255, 255, 0.1); 
     transition: background-color 0.3s ease; /* Add transition effect */
 }
 
@@ -927,3 +935,12 @@ body {
     /* gap:20px; */
 }
 
+
+.dash-nav:hover{
+  background-color: rgba(13, 14, 112, 0.897);
+  
+}
+
+.mode-content{
+  height:16vh;
+}
