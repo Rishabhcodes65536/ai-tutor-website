@@ -12,7 +12,9 @@ class userController{
         if (req.session._id) {
             res.redirect("/dashboard");
         }
+        else{
         res.render("login.ejs");
+        }
     }
     static createUserDoc = async (req,res) =>{
         try {

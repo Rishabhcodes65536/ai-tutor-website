@@ -32,15 +32,15 @@
                 </div>
                 <div class="marks_awarded">Marks awarded:<%=abcd.response.marks_awarded_to_student%></div>
                 <div class="feedback">
-                <div class="api-feedback"><%=abcd.response.feedback%></div>
-                <div class="statement">The answer you gave was <%=user_solution%></div>
+                <div class="api-feedback"><%-abcd.response.feedback%></div>
+                <div class="statement">The answer you gave was <%-user_solution%></div>
                 </div>
                 
             <%} else{%>
             <div class="alert alert-danger" role="alert">
                     Wrong Answer 😔!!
                 <div class="marks_awarded">Marks awarded:<%=abcd.response.marks_awarded_to_student%></div>
-                <div class="feedback"><%=abcd.response.feedback%></div>
+                <div class="feedback"><%-abcd.response.feedback%></div>
             </div>
             <%}%>
         <%}%>

@@ -276,3 +276,5 @@ function handleKeyPress(event) {
         textarea.setSelectionRange(currentPosition + 1, currentPosition + 1);
     }
 }
+
+ 
