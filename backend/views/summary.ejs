@@ -1,0 +1,58 @@
+<%- include('./partials/header.ejs') %>
+
+<section class="dashboard d-flex">
+    <!-- Side Navbar -->
+    <%- include('./partials/side_navbar.ejs') %>
+
+    <!-- Main Content -->
+    <div class="main-content flex-grow-1 d-flex flex-column justify-content-start px-4">
+        <!-- Title and Return Button -->
+        <div class="container mb-4 d-flex justify-content-between align-items-center">
+            <a href="/doubt" class="btn btn-secondary">Return</a>
+            <div>
+                <h2>Summary of Query</h2>
+                <hr class="mb-4">
+            </div>
+            <div></div> <!-- Dummy div -->
+        </div>
+
+        <!-- Question Card -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Question</h5>
+                            <p class="card-text"><%= question %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Answer Card -->
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Answer</h5>
+                            <p class="card-text"><%= answer %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Follow Up Question Button -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <a href="/doubt" class="btn btn-primary btn-block">Follow Up Question</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('./partials/footer.ejs') %>

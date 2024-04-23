@@ -943,3 +943,63 @@ body {
 .mode-content{
   height:16vh;
 }
+
+
+/* ******************************chatbot part *********************************** */
+
+/* Center align the central heading */
+#central-heading {
+    margin-top: 5%;
+}
+
+/* Style the input prompt */
+#input-prompt textarea {
+    width: 100%;
+    min-height: 150px;
+    resize: none;
+}
+
+/* Style the Recent Chats section */
+#recent-chats-heading h2 {
+    margin-bottom: 1rem;
+}
+
+/* Style the hr lines */
+#hr-left,
+#hr-right {
+    border-top: 2px solid black;
+    margin: 0;
+}
+
+/* Style the card */
+#question-container .card {
+    margin-bottom: 1rem;
+}
+
+/* Center align the card title */
+.card-title-custom {
+    text-align: center;
+}
+
+/* Adjust button margin */
+#submit-btn,
+.view-summary-btn {
+    margin-top: 1rem;
+}
+
+.recent-card{
+  display: flex;
+  justify-content: space-around;
+}
+
+.prompt-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+#input-prompt button{
+  margin-left:450px;
+}
+/* *********************************** end ********************************* */

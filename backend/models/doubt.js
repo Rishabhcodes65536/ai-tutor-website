@@ -3,7 +3,7 @@
 import mongoose from "mongoose"
 
 const doubtSchema = new mongoose.Schema({
-  user_id: {
+  student_id: {
     type: String,
     required: true
   },

@@ -1,0 +1,47 @@
+<%-include('./partials/header.ejs')%>
+</head>
+<body>
+<section class="dashboard d-flex">
+    <!-- Side Navbar -->
+    <%- include('./partials/side_navbar.ejs') %>
+
+    <!-- Main Content -->
+    <div class="main-content flex-grow-1 d-flex flex-column justify-content-start px-4">
+        <!-- Central Heading -->
+        <header class="text-center mt-5" id="central-heading">
+            <h2>Good evening <%= name %></h2>
+            <h3>How can Knolly help you?</h3>
+        <hr>
+        </header>
+
+        <!-- Input Prompt -->
+        <div class="container mt-4" id="input-prompt">
+            <form action="/doubt" method="POST">
+                <textarea class="form-control" id="doubt-textarea" name="question" rows="5" placeholder="Ask your question here..."></textarea>
+                <button type="submit" class="btn btn-primary mt-3 justify-content-center" id="submit-btn">Submit</button>
+            </form>
+        </div>
+
+        <!-- Recent Chats -->
+        <header class="text-center mt-5" id="recent-chats-heading">
+            <h2>Recent Chats</h2>
+            <hr class="d-inline-block w-25 mx-4 border-dark" id="hr-left" />
+        </header>
+
+        <!-- Question Container Cards -->
+        <div class="container mt-4" id="question-container">
+            <% recentDoubts.forEach((doubt, index) => { %>
+                <div class="card mb-3" id="card-<%= index %>">
+                    <div class="card-body recent-card">
+                        <h5 class="card-title card-title-custom"><%= doubt.question %></h5>
+                        <p class="card-text card-text-custom"><%= doubt.solution %></p>
+                        <a href="/doubt/<%= doubt._id %>" class="btn btn-primary view-summary-btn">View Summary</a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+            <hr class="d-inline-block w-25 mx-4 border-dark" id="hr-right" />
+    </div>
+</section>
+
+<%- include('./partials/footer.ejs') %>
