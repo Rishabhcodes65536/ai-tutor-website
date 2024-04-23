@@ -19,7 +19,7 @@
             <h1 class="title"><%= data.question %></h1>
             <%if(!locals.abcd){%>
             <label for="answer" class="form-label">Answer:</label>
-            <input type="text" id="answer" name="solution"  size="50" class="Input-Box" placeholder="Enter your answer here">
+            <textarea id="answer" name="solution" rows="5" cols="50" class="Input-Box" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
             <%}%>
             <h3 class="marks">Marks: <%= data.marks %></h3>

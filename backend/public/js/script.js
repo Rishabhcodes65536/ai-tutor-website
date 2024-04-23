@@ -251,3 +251,28 @@ function chartGenerator(chartData) {
         }
     });
 }
+
+
+function handleKeyPress(event) {
+    // Check if the Enter key is pressed (key code 13)
+    if (event.keyCode === 13) {
+        // Prevent the default behavior of the Enter key (inserting a new line)
+        event.preventDefault();
+        
+        // Get the current cursor position in the textarea
+        var textarea = document.getElementById("answer");
+        var currentPosition = textarea.selectionStart;
+        
+        // Get the current value of the textarea
+        var currentValue = textarea.value;
+        
+        // Insert a newline character into the textarea at the current cursor position
+        var newValue = currentValue.slice(0, currentPosition) + '\n' + currentValue.slice(currentPosition);
+        
+        // Update the value of the textarea
+        textarea.value = newValue;
+        
+        // Move the cursor to the position after the inserted newline
+        textarea.setSelectionRange(currentPosition + 1, currentPosition + 1);
+    }
+}

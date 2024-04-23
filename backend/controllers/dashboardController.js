@@ -71,10 +71,12 @@ class dashboardController{
 
         const accuracyData = [];
         for (const topic of topics) {
-            const totalQuestions = await questionModel.countDocuments({ topic: topic.name });
-            const questions = await questionModel.find({ topic: topic.name });
+            const totalQuestions = await questionModel.countDocuments({student_id:req.session._id,topic: topic.name });
+            const questions = await questionModel.find({student_id:req.session._id,topic: topic.name });
+            console.log(totalQuestions);
+            console.log(questions);
             const correctQuestions = questions.filter(question => question.total_marks === question.allocated_marks).length;
-
+            console.log(correctQuestions);
             const accuracy = Math.ceil(totalQuestions > 0 ? (correctQuestions / totalQuestions) * 100 : 0);
             accuracyData.push({ topic: topic.name, accuracy: accuracy });
 

@@ -6,6 +6,7 @@ import dotenv from "dotenv"
 import quizRoute from "./routes/quizRoute.js"
 import logoutRoute from "./routes/logoutRoute.js"
 import dashboardRoute from "./routes/dasboardRoute.js"
+import doubtRoute from "./routes/doubtRoute.js"
 import path from 'path';
 const __dirname = path.resolve();
 
@@ -61,7 +62,7 @@ app.use("/quiz",quizRoute)
 app.use("/logout",logoutRoute);
 
 app.use("/dashboard",dashboardRoute);
-
+app.use("/doubt",doubtRoute);
 
 
 app.listen(port,() =>{

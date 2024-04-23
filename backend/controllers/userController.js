@@ -42,6 +42,7 @@ class userController{
                     if(resul){
                         req.session._id = kkk._id;
                         req.session.name= kkk.name;
+                        req.session.student_id=kkk.student_id;
                         res.set('user_id', kkk._id);
                         res.redirect(`/dashboard`);
                     }
