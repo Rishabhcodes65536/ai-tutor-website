@@ -67,6 +67,8 @@ class dashboardController{
             { id: 10, name: 'Number Theory' }
         ];
 
+        let highestAccuracyTopic = { topic: '', accuracy: 0 };
+
         const accuracyData = [];
         for (const topic of topics) {
             const totalQuestions = await questionModel.countDocuments({ topic: topic.name });
@@ -75,11 +77,18 @@ class dashboardController{
 
             const accuracy = Math.ceil(totalQuestions > 0 ? (correctQuestions / totalQuestions) * 100 : 0);
             accuracyData.push({ topic: topic.name, accuracy: accuracy });
+
+            if (accuracy > highestAccuracyTopic.accuracy) {
+                highestAccuracyTopic = { topic: topic.name, accuracy: accuracy };
+            }
         }
 
         console.log(accuracyData);
+        console.log('Highest Accuracy Topic:', highestAccuracyTopic);
+        
         res.render('dashboardtwo.ejs', { 
             accuracyData: accuracyData,
+            highest_topic: highestAccuracyTopic,
             "page_id":"2",
             "name":req.session.name
          });
@@ -88,6 +97,7 @@ class dashboardController{
         res.status(500).send('Internal Server Error');
     }
 }
+
 static getPracticeActivityData = async (req, res) => {
         try {
             // Fetch data from the questionModel
