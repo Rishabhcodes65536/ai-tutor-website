@@ -1,0 +1,36 @@
+<%- include("./partials/header.ejs") %>
+</head>
+<body>
+<section class="d-flex align-items-stretch">
+<%- include("./partials/side_navbar.ejs") %>
+
+<div class="container question-content-wrapper">
+    <div class="d-flex align-items-center  questionheader justify-content-between"> <!-- Added fixed-top class -->
+        <h1 class="title-question">Question on <%= topic %></h1>
+        
+        <a href="/topic" class="btn btn-outline-secondary">Back to topic</a>
+    </div>
+    <div class="answer_container" style="margin-top: 100px;"> <!-- Added margin-top to prevent overlap with fixed title -->
+        <form class="form" method="post">
+            <input type="hidden" id="question" name="question" value="<%= question %>">
+            <input type="hidden" id="marks" name="marks" value="<%= total_marks %>">
+            <input type="hidden" id="topic" name="topic" value="<%= topic %>">
+            <h1 class="title"><%= question %></h1>
+            <% steps.forEach((step, index) => { %>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="card-text"><%= step.solution_step %></p>
+                        <label for="step<%= index %>" class="form-label">Order:</label>
+                        <input type="number" id="step<%= index %>" name="userResponse[]" class="form-control" min="1" max="<%= steps.length %>" required>
+                    </div>
+                </div>
+            <% }); %>
+            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+        </form>
+    </div>
+</div>
+</section>
+</body>
+</html>
+
+<%- include("./partials/footer.ejs") %>

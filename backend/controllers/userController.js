@@ -18,7 +18,7 @@ class userController{
     }
     static createUserDoc = async (req,res) =>{
         try {
-            console.log(req.body);
+            console.log(req.body);  
             const hashed_password=await bcrypt.hash(req.body.password,10)
             const doc=new userModel({
                 name:req.body.name,

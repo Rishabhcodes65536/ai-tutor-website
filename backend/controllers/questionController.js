@@ -1,17 +1,18 @@
 import mongoose from "mongoose"
 import axios from "axios"
+import crypto from "crypto"
 import questionModel from "../models/question.js";
+import MetaquestionModel from "../models/metacognition.js";
 
+class questionController{    
 
-
-class questionContoller{
     static getModes=async (req,res)=>{
         res.render('quiz.ejs',{
             "user":req.session.name
         });
     }
     static getTopics=async (req,res,API_ENDPOINT)=>{
-    const topicId = req.params.id;
+    const modeName = req.params.mode;
     const topics = [
     { id: 1, name: 'Differentiation' },
     { id: 2, name: 'Integration' },
@@ -25,8 +26,9 @@ class questionContoller{
     { id: 10, name: 'Number Theory' }
     ];
     console.log(req.session._id);
+    console.log(modeName);
     if (req.session._id) {
-            res.render('topic.ejs', { topics, "id":req.session._id,"user":req.session.name});
+            res.render('topic.ejs', { topics, "id":req.session._id,"user":req.session.name,"mode":modeName});
     }
     else{
         res.render("login.ejs");
@@ -72,6 +74,36 @@ class questionContoller{
         }
          catch (err) {
             console.log(err);
+        }
+    }
+    static fetchMetaApi=async (req,res)=>{
+       try {
+            const Question = req.query.topic;
+
+            // Make API call to fetch data
+            const response = await axios.post("http://20.42.62.249:8081/internal/question_generation/analyse/multi", {
+                "question":Question
+            });
+            console.log(response)
+            // Extract question and steps from the API response
+            const { question, steps , marks} = response.data.response;
+            console.log(steps)
+            // Pair the steps with their order and sort by order
+            const orderedSteps = steps.map(step => ({
+                order: step.order,
+                solution_step: step.solution_step
+            })).sort((a, b) => a.order - b.order);
+
+            // Shuffle the ordered steps to jumble the order
+            const shuffledSteps = questionController.shuffleArray(orderedSteps);
+
+            // Generate a hashed string representing the correct order
+            const correctOrderHash = questionController.hashOrder(orderedSteps);
+
+            res.render('metacognition.ejs', { question, steps:shuffledSteps, correctOrderHash,"topic":Question,"total_marks":marks});
+        } catch (error) {
+            console.error('Error fetching metacognition question mode data:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
         }
     }
     static handleSolution=async (req,res)=>{
@@ -121,6 +153,54 @@ class questionContoller{
         res.status(500).send('Internal Server Error');
     }
     }
+    static handleMetaSolution=async (req,res)=>{
+       try {
+            const { correctOrderHash} = req.body; // Correct order hash sent from client
+            const userOrder = req.body.userOrder; // User's submitted order
+            const userOrderHash = questionController.hashOrder(userOrder); // Hash the user's submitted order
+            
+            // Check if the user's order hash matches the correct order hash
+            const isCorrect = userOrderHash === correctOrderHash;
+
+            // Allocate marks based on correctness
+            const allocatedMarks = isCorrect ? 5 : 0;
+
+            // Save the solution in the database
+            const { student_id, question, topic, total_marks} = req.body;
+            const newMetacognition = new MetaquestionModel({
+                student_id,
+                question,
+                student_response: JSON.stringify(userOrder), // Save user's order as a string
+                topic,
+                total_marks,
+                allocated_marks: isCorrect ? total_marks : 0, // Allocate full marks if correct, else 0
+                steps: userOrder // Save user's order steps
+            });
+            await newMetacognition.save();
+        res.render('meta_answer.ejs', {
+            "data":obj,
+            "topic":req.body.topic,
+            "abcd":response_from_api.data,
+            "user_solution":solution
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    }
+
+    static shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    static hashOrder(orderedSteps) {
+        const orderedSolutionSteps = orderedSteps.map(step => step.solution_step).join(',');
+        return crypto.createHash('sha256').update(orderedSolutionSteps).digest('hex');
+    }
 }
 
-export default questionContoller;
+export default questionController;

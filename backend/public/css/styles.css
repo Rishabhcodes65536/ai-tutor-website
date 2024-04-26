@@ -561,7 +561,9 @@ footer .container{
   width:50px
 }
 
-
+.form-control{
+  width:200px;
+}
 
 /* faq section */
 
@@ -838,11 +840,6 @@ body {
     transition: color 0.3s ease; /* Add transition effect */
 }
 
-.sidebar {
-    /* Your existing styles */
-    border-top-right-radius: 15px; /* Apply border radius */
-    border-bottom-right-radius: 15px; /* Apply border radius */
-}
 
 .Content p{
   color: rgba(var(--default-color-rgb), 0.7);
@@ -1003,3 +1000,8 @@ body {
   margin-left:450px;
 }
 /* *********************************** end ********************************* */
+
+.question-content-wrapper{
+  overflow-y: hidden;
+  margin:auto;
+}

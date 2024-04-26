@@ -7,6 +7,7 @@ import quizRoute from "./routes/quizRoute.js"
 import logoutRoute from "./routes/logoutRoute.js"
 import dashboardRoute from "./routes/dasboardRoute.js"
 import doubtRoute from "./routes/doubtRoute.js"
+import metahandlerRoute from "./routes/metaHandlerRoute.js"
 import path from 'path';
 const __dirname = path.resolve();
 
@@ -58,6 +59,10 @@ app.use("/answer", (req, res, next) => {
     req.SOLUTION_API_ENDPOINT=SOLUTION_API_ENDPOINT;
     next();
 }, handlerRoute);
+app.use("/metacognition", (req, res, next) => {
+    req.API_ENDPOINT =process.env.META_COGNITION_ENDPOINT;
+    next();
+}, metahandlerRoute);
 app.use("/quiz",quizRoute)
 app.use("/logout",logoutRoute);
 
