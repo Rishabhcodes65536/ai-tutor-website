@@ -2,13 +2,14 @@ import mongoose from "mongoose"
 import axios from "axios"
 import crypto from "crypto"
 import questionModel from "../models/question.js";
+import ejsLint from 'ejs-lint'
 import MetaquestionModel from "../models/metacognition.js";
 
 class questionController{    
 
     static getModes=async (req,res)=>{
         res.render('quiz.ejs',{
-            "user":req.session.name
+            "user":req.session.name.split(' ')[0]
         });
     }
     static getTopics=async (req,res,API_ENDPOINT)=>{
@@ -28,7 +29,7 @@ class questionController{
     console.log(req.session._id);
     console.log(modeName);
     if (req.session._id) {
-            res.render('topic.ejs', { topics, "id":req.session._id,"user":req.session.name,"mode":modeName});
+            res.render('topic.ejs', { topics, "id":req.session._id,"user":req.session.name.split(' ')[0],"mode":modeName});
     }
     else{
         res.render("login.ejs");
@@ -76,31 +77,52 @@ class questionController{
             console.log(err);
         }
     }
-    static fetchMetaApi=async (req,res)=>{
-       try {
-            const Question = req.query.topic;
+        static fetchMetaApi=async (req,res)=>{
+        try {
+                const Question = req.query.topic;
 
-            // Make API call to fetch data
-            const response = await axios.post("http://20.42.62.249:8081/internal/question_generation/analyse/multi", {
-                "question":Question
-            });
-            console.log(response)
-            // Extract question and steps from the API response
-            const { question, steps , marks} = response.data.response;
-            console.log(steps)
-            // Pair the steps with their order and sort by order
-            const orderedSteps = steps.map(step => ({
-                order: step.order,
-                solution_step: step.solution_step
-            })).sort((a, b) => a.order - b.order);
+                // Make API call to fetch data
+                const response = await axios.post("http://20.42.62.249:8081/internal/question_generation/analyse/multi", {
+                    "question":Question
+                });
+                console.log(response)
+                let isQuestion= response.data.response.question;
 
-            // Shuffle the ordered steps to jumble the order
-            const shuffledSteps = questionController.shuffleArray(orderedSteps);
+                //  let parsed_string = JSON.parse(jsonString);
+                // Extract question and steps from the API response
+                if(isQuestion){
+                    console.log("yepp");
+                const { question, steps , marks} = response.data.response;
+                console.log(steps)
+                // Pair the steps with their order and sort by order
+                
+                const orderedSteps = steps;
 
-            // Generate a hashed string representing the correct order
-            const correctOrderHash = questionController.hashOrder(orderedSteps);
+                // Shuffle the ordered steps to jumble the order
+                const shuffledSteps = questionController.shuffleArray(orderedSteps);
+                const correctOrder=shuffledSteps.map(step => step.order);
+                const solutionStepsArray = shuffledSteps.map(step => step.solution_step);
 
-            res.render('metacognition.ejs', { question, steps:shuffledSteps, correctOrderHash,"topic":Question,"total_marks":marks});
+
+                // Encapsulate each solution_step string in quotes
+                const quotedStrings = solutionStepsArray.map(step => `"${step}"`);
+
+                // Join all quoted strings using a delimiter that is unlikely to appear in the strings
+                const joinedString = quotedStrings.join('|'); // Use '|' or any other delimiter
+
+                // Now split the joined string using the delimiter
+                const newArray = joinedString.split('|'); // Use the same delimiter
+
+                // Remove quotes from each element in newArray
+                const finalArray = newArray.map(item => item.replace(/^"(.*)"$/, '$1'));
+                console.log(solutionStepsArray);
+                console.log(correctOrder);
+                res.render('metacognition.ejs', { question, steps:finalArray, correctOrder,"topic":Question,"total_marks":marks});
+                }
+                else{
+                    console.log("NOPEE!!")
+                    res.redirect(req.get('referer'));
+                }
         } catch (error) {
             console.error('Error fetching metacognition question mode data:', error);
             res.status(500).json({ error: 'Internal Server Error' });
@@ -125,7 +147,7 @@ class questionController{
                 'Content-Type': 'application/json',
                 'Accept': '*/*'
             }
-        });  
+        });
         console.log(response_from_api.data);
          const questionDoc= new questionModel({
             student_id:req.session._id,
@@ -142,6 +164,8 @@ class questionController{
             question:question,
             marks:marks
         }
+        const correctSteps=steps.map(step => step.solution_step);
+
         res.render('answer.ejs', {
             "data":obj,
             "topic":req.body.topic,
@@ -155,34 +179,98 @@ class questionController{
     }
     static handleMetaSolution=async (req,res)=>{
        try {
-            const { correctOrderHash} = req.body; // Correct order hash sent from client
-            const userOrder = req.body.userOrder; // User's submitted order
-            const userOrderHash = questionController.hashOrder(userOrder); // Hash the user's submitted order
+        //     const { correctOrderHash} = req.body; // Correct order hash sent from client
+        //     const userOrder = req.body.userOrder; // User's submitted order
+        //     const userOrderHash = questionController.hashOrder(userOrder); // Hash the user's submitted order
             
-            // Check if the user's order hash matches the correct order hash
-            const isCorrect = userOrderHash === correctOrderHash;
+        //     // Check if the user's order hash matches the correct order hash
+        //     const isCorrect = userOrderHash === correctOrderHash;
 
-            // Allocate marks based on correctness
-            const allocatedMarks = isCorrect ? 5 : 0;
+        //     // Allocate marks based on correctness
+        //     const allocatedMarks = isCorrect ? 5 : 0;
 
-            // Save the solution in the database
-            const { student_id, question, topic, total_marks} = req.body;
-            const newMetacognition = new MetaquestionModel({
-                student_id,
-                question,
-                student_response: JSON.stringify(userOrder), // Save user's order as a string
-                topic,
-                total_marks,
-                allocated_marks: isCorrect ? total_marks : 0, // Allocate full marks if correct, else 0
-                steps: userOrder // Save user's order steps
-            });
-            await newMetacognition.save();
-        res.render('meta_answer.ejs', {
-            "data":obj,
-            "topic":req.body.topic,
-            "abcd":response_from_api.data,
-            "user_solution":solution
+        //     // Save the solution in the database
+        //     const { student_id, question, topic, total_marks} = req.body;
+        //     const newMetacognition = new MetaquestionModel({
+        //         student_id,
+        //         question,
+        //         student_response: JSON.stringify(userOrder), // Save user's order as a string
+        //         topic,
+        //         total_marks,
+        //         allocated_marks: isCorrect ? total_marks : 0, // Allocate full marks if correct, else 0
+        //         steps: userOrder // Save user's order steps
+        //     });
+        //     await newMetacognition.save();
+        // res.render('meta_answer.ejs', {
+        //     "data":obj,
+        //     "topic":req.body.topic,
+        //     "abcd":response_from_api.data,
+        //     "user_solution":solution
+        // });
+        try {
+        // Extract data from the request
+        console.log(req.body);
+        const { question, steps, correctOrder, topic, total_marks,userResponse} = req.body;
+        console.log(question,steps,correctOrder,topic,total_marks,userResponse);
+        const submittedOrder = req.body.userResponse.map(Number);
+        const correctOrderArray = Array.isArray(correctOrder) ? correctOrder : correctOrder.split(',');
+        const correctOrderNumbers = correctOrderArray.map(Number);
+        let isCorrect = true;
+        const rishabhArray = [];
+        const newsteps=[];
+        for (let i = 0; i < correctOrder.length; i++) {
+        if (correctOrderNumbers[i] != userResponse[i]) {
+            console.log(correctOrderNumbers[i]);
+            console.log(userResponse[i]);
+            isCorrect = false;
+            rishabhArray.push(0);
+        }
+        else{
+            rishabhArray.push(1);
+        }
+        }
+        console.log(newsteps);
+        console.log(question,steps,correctOrder,correctOrderNumbers,topic,total_marks,submittedOrder,isCorrect);
+        let allocated_marks=0;
+        if(isCorrect){
+            allocated_marks=total_marks;
+        }
+        const rishData=[];
+        console.log(rishabhArray);
+        var feedback="";
+        if(isCorrect){
+            feedback="Correct Answer!!";
+        }
+        else{
+            feedback="Wrong answer!!";
+        }
+        const questionDoc= new questionModel({
+            student_id:req.session._id,
+            question:question,
+            student_response:JSON.stringify(steps),
+            topic:topic,
+            total_marks:total_marks,
+            allocated_marks:allocated_marks,
+            feedback:feedback,
+            mode:'metacognition'
+        })
+        const mongoSving=await questionDoc.save();
+        console.log(mongoSving);
+        res.render('metacognition.ejs', { 
+            question, 
+            newsteps:steps, 
+            correctOrder:correctOrderNumbers, 
+            topic, 
+            total_marks,
+            submittedOrder,
+            isCorrect,
+            allocated_marks,
+            rishabhArray
         });
+    } catch (error) {
+        console.error('Error handling metacognition solution:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');

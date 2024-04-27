@@ -20,6 +20,15 @@ const questionSchema = new mongoose.Schema({
   allocated_marks: {
     type: Number, // Corrected type definition
   },
+  mode: {
+    type: String,
+    enum: ['answer', 'metacognition'], // Define enum values
+    default:'answer' // Optional, specify if the mode field is required
+  },
+  attempted_at: {
+    type: Date,
+    default: Date.now
+  },
   feedback: { 
     type: String,
     default: ""

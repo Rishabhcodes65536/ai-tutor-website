@@ -12,7 +12,7 @@ static showDoubtsPrompt = async(req, res) =>{
     const recentDoubts = await Doubt.find({ student_id: req.session._id })
       .sort({ timestamp: -1 }) // Sort by timestamp in descending order
       .limit(5);
-    res.render('doubt.ejs', { "name": req.session.name, "_id": req.session._id,recentDoubts});
+    res.render('doubt.ejs', { "name": req.session.name.split(' ')[0], "_id": req.session._id,recentDoubts});
   } catch (error) {
     console.error('Error rendering doubts prompt:', error);
     res.status(500).json({ error: 'Internal Server Error' });

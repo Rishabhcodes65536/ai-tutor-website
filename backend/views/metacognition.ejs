@@ -1,36 +1,84 @@
-<%- include("./partials/header.ejs") %>
+<head>
+    <%- include("./partials/header.ejs") %>
+
+    <style>
+        .solution-cards-container {
+            margin-top: 10px;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        body {
+            overflow-y: auto;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-text {
+            margin-bottom: 0;
+        }
+
+    </style>
 </head>
+
 <body>
-<section class="d-flex align-items-stretch">
-<%- include("./partials/side_navbar.ejs") %>
+    <%- include("./partials/header.ejs") %>
 
-<div class="container question-content-wrapper">
-    <div class="d-flex align-items-center  questionheader"> <!-- Added fixed-top class -->
-        <h1 class="title-question">Question on <%= topic %></h1>
-        
-        <a href="/topic" class="btn btn-outline-secondary">Back to topic</a>
-    </div>
-    <div class="answer_container" style="margin-top: 100px;"> <!-- Added margin-top to prevent overlap with fixed title -->
-        <form class="form" method="post">
-            <input type="hidden" id="question" name="question" value="<%= question %>">
-            <input type="hidden" id="marks" name="marks" value="<%= total_marks %>">
-            <input type="hidden" id="topic" name="topic" value="<%= topic %>">
-            <h1 class="title"><%= question %></h1>
-            <% steps.forEach((step, index) => { %>
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <p class="card-text"><%= step.solution_step %></p>
-                        <label for="step<%= index %>" class="form-label">Order:</label>
-                        <input type="number" id="step<%= index %>" name="userResponse[]" class="form-control" min="1" max="<%= steps.length %>" required>
+    <section class="d-flex metacognition">
+        <%- include("./partials/side_navbar.ejs") %>
+
+        <div class="container question-content-wrapper">
+            <div class="questionheader d-flex align-items-center">
+                <h1 class="title-question">Question on <%= topic %></h1>
+                <a href="/topic/metacognition" class="btn btn-outline-secondary">Back to topic</a>
+            </div>
+
+            <div class="answer_container solution-cards-container">
+                <form class="form container" method="post">
+                    <input type="hidden" id="question" name="question" value="<%= question %>">
+                    <input type="hidden" id="marks" name="total_marks" value="<%= total_marks %>">
+                    <input type="hidden" id="topic" name="topic" value="<%= topic %>">
+                    <input type="hidden" id="topic" name="correctOrder" value="<%= correctOrder %>">
+
+                    <h1 class="title"><%= question %></h1>
+
+                    <% if (!locals.newsteps) { %>
+                        <% steps.forEach((step, index) => { %>
+                            <input type="hidden" id="topic" name="steps" value="<%= step %>">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text"><%= index + 1 %>. <%= step %></p>
+                                </div>
+                            </div>
+                        <% }); %>
+                        <label for="solve" class="form-label">Order:</label>
+                        <% steps.forEach((step, index) => { %>
+                        <input type="number" id="step <%= index %>" name="userResponse" class="form-control meta-step" maxlength="1" size="3" required>
+                        <%})%>
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                    <% } else { %>
+                    <div class="container">
+                        <% newsteps.forEach((step, index) => { %>
+                            <div class="card <%= rishabhArray[index] ? 'bg-green' : 'bg-red' %>">
+                                <div class="card-body">
+                                    <p class="card-text"><%= index + 1 %>. <%= step %></p>
+                                </div>
+                            </div>
+                        <% }); %>
+
+                        <h4 class="allocated_meta">Allocated Marks: <%= allocated_marks %></h4>
                     </div>
-                </div>
-            <% }); %>
-            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
-        </form>
-    </div>
-</div>
-</section>
-</body>
-</html>
+                    <% } %>
+                </form>
+            </div>
+        </div>
+    </section>
 
-<%- include("./partials/footer.ejs") %>
+    <%- include("./partials/footer.ejs") %>
+</body>

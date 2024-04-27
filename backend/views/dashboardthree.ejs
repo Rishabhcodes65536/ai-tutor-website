@@ -5,8 +5,7 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-        var topicData = <%- JSON.stringify(topicData) %>;
-        var metacognitionData = <%- JSON.stringify(metacognitionData) %>;
+        var combinedData = <%- JSON.stringify(combinedData) %>;
         var topicVariables = <%- JSON.stringify(topicVariables) %>;
 
         var data = new google.visualization.DataTable();
@@ -14,10 +13,12 @@
         data.addColumn('number', 'Answer Mode');
         data.addColumn('number', 'Metacognition Mode');
 
-
         topicVariables.forEach(topicVariable => {
-            data.addRow([topicVariable, topicData[topicVariable],metacognitionData[topicVariable]]);
+            var answerCount = combinedData[topicVariable]?.answer || 0; // If data for answer mode is not available, use 0
+            var metacognitionCount = combinedData[topicVariable]?.metacognition || 0; // If data for metacognition mode is not available, use 0
+            data.addRow([topicVariable, answerCount, metacognitionCount]);
         });
+
         var options = {
             chart: {
                 title: 'Practice Activity',
@@ -29,7 +30,8 @@
         var chart = new google.charts.Bar(document.getElementById('answerModeChart'));
         chart.draw(data, google.charts.Bar.convertOptions(options));
     }
-    </script>
+</script>
+
 </head>
 <body>
 <section class="d-flex flex-column align-items-stretch">

@@ -9,6 +9,7 @@ import dashboardRoute from "./routes/dasboardRoute.js"
 import doubtRoute from "./routes/doubtRoute.js"
 import metahandlerRoute from "./routes/metaHandlerRoute.js"
 import path from 'path';
+import ejslint from 'ejs-lint'
 const __dirname = path.resolve();
 
 dotenv.config();

@@ -885,7 +885,8 @@ body {
 
 .sidebar2 {
     flex: 0 0 200px; /* Set the width of the sidebar */
-    background-color: #f8f9fa; /* Set the background color */
+    /* background-color: #f8f9fa; */
+    background-color: white;
     padding: 20px; /* Add some padding */
     border-left: 1px solid #dee2e6; /* Add a border to separate it from the main content */
 }
@@ -926,8 +927,8 @@ body {
         margin-bottom: 20px; /* Adjust as needed */
     }
 
-    .navbarsactive {
-        background-color: #2A3891;
+    .navbarsactive  {
+        background-color: black;
         color: white;
     }
 
@@ -938,10 +939,17 @@ body {
     /* gap:20px; */
 }
 
+.mr-auto .nav-item a{
+  color: white;
+  background-color: rgba(33, 35, 147, 0.596);
+}
+.mr-auto .nav-item a:hover {
+  color: rgb(rgb(222, 57, 57), green, blue) !important;
+  background-color: rgb(225, 30, 30);
+}
 
 .dash-nav:hover{
   background-color: rgba(13, 14, 112, 0.897);
-  
 }
 
 .mode-content{
@@ -1011,4 +1019,58 @@ body {
 .question-content-wrapper{
   overflow-y: hidden;
   margin:auto;
+}
+
+
+.follow-up{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.follow-up-title{
+  text-align: center;
+  margin-bottom: 7px;
+}
+
+#followUpForm textarea{
+  /* margin-bottom: 8px;
+   */
+   margin: 10px;
+}
+
+#followUpForm button{
+  /* margin-bottom: 8px; */
+  margin: 10px;
+}
+
+#doubt-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* background: #000; */
+}
+
+.bg-red{
+  background-color: red !important;
+}
+.bg-green{
+  background-color: green !important;
+}
+
+.meta-step{
+  margin:10px;
+  margin-bottom: 20px;
+  width:10px;
+}
+
+.allocated_meta{
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

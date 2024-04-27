@@ -18,7 +18,9 @@
         // Set chart options
         var options = {'title':'Answer Mode',
                        'width':400,
-                       'height':400};
+                       'height':400,
+                       'titleTextStyle': {fontSize: 18, bold: true}
+                       };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('charts_div'));
@@ -31,15 +33,16 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-            ['Right', 3],
-            ['Wrong', 1],
-            ['NA', 0]
+            ['Correct', <%=Right_meta%>],
+            ['Incorrect', <%=Wrong_meta%>],
+            ['NA', <%=NA_meta%>]
         ]);
 
         // Set chart options
         var options = {'title':'Metacognition Mode',
                        'width':400,
-                       'height':400};
+                       'height':400,
+                       'titleTextStyle': {fontSize: 18, bold: true}};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('charts_div2'));
@@ -73,7 +76,7 @@
                     <div class="sidebar2">
                         <nav class="py-1">
                             <ul class="flex-column">
-                                <li class="mb-1">Top Knolly Students this Month</li>
+                                <li class="mb-1"> <b>Top Knolly Students this Month</b></li>
                                 <li>Sanyam Singh</li>
                                 <li>Rishabh Jain</li>
                                 <li>Aviral</li>

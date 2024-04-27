@@ -3,7 +3,7 @@
 <body>
 <section class="dashboard d-flex">
     <!-- Side Navbar -->
-    <%- include('./partials/side_navbar.ejs') %>
+        <%- include('./partials/side_navbar.ejs') %> 
 
     <!-- Main Content -->
     <div class="main-content flex-grow-1 d-flex flex-column justify-content-start px-4">
@@ -15,10 +15,10 @@
         </header>
 
         <!-- Input Prompt -->
-        <div class="container col-md-6 mt-4" id="input-prompt">
-            <form action="/doubt" method="POST">
+        <div class="col-md-6 mt-4" id="input-prompt">
+            <form action="/doubt" id="doubt-container" method="POST">
                 <textarea class="form-control" id="doubt-textarea" name="question" rows="5" placeholder="Ask your question here..."></textarea>
-                <button type="submit" class="btn btn-primary  justify-content-center" id="submit-btn">Submit</button>
+                <button type="submit" class="btn btn-primary" id="doubt-submit-btn">Submit</button>
             </form>
         </div>
 
@@ -32,7 +32,7 @@
         <div class="container mt-4" id="question-container">
             <% recentDoubts.forEach((doubt, index) => { %>
                 <div class="card mb-3" id="card-<%= index %>">
-                    <div class="card-body recent-card">
+                    <div class="card-body recent-card justify-content-between">
                         <h5 class="card-title card-title-custom"><%= doubt.question %></h5>
                         <p class="card-text card-text-custom"><%= doubt.solution %></p>
                         <a href="/doubt/<%= doubt._id %>" class="btn btn-primary view-summary-btn">View Summary</a>
