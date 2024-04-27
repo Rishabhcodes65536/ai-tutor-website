@@ -125,7 +125,7 @@ class questionController{
                 'Content-Type': 'application/json',
                 'Accept': '*/*'
             }
-        });
+        });  
         console.log(response_from_api.data);
          const questionDoc= new questionModel({
             student_id:req.session._id,

@@ -9,15 +9,15 @@
     <!-- Main Content -->
     <%-include('./partials/dashboard_navbar.ejs')%>
 
-        <div class="container bg-light p-4" style="flex-grow: 1;">
+        <div class="container bg-light p-4"  style="flex-grow: 1;">
             <div class="row">
-                <div class="col-md-12 mb-4">
+                <div class="col-md-12 mb-4 justify-content-center">
                     <h5>Track the completion rate of practice questions and performance within each topic</h5>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <table class="table">
+                <div class="col-md-9">
+                    <table class="table col-md-9">
                         <thead class="visually-hidden">
                             <tr>
                                 <th>Subject</th>
@@ -39,22 +39,21 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+        <div class="col-md-3 sidebar2">
+        <nav class="py-3">
+                <h4>What Knolly Thinks</h4>
+                <p>Let's dive deeper into your subjects! You've aced <%=highest_topic.topic%> with an impressive accuracy of <%=highest_topic.accuracy%>%.</>
+                <p>Looks like you need a little more practice in probability.</p>
+                <p>Don't worry, Knolly has tons of practice questions to help you improve!</p>
+                <!-- Link to specific subject practice questions -->
+        </nav>
+        </div>
+    </div>
         </div>
     </div>
 
     <!-- What Knolly Thinks Sidebar -->
-    <div class="sidebar2" style="margin-left: auto;margin-top: 180px">
-        <nav class="py-4">
-            <ul class="nav flex-column">
-                <li class="mb-2">What Knolly thinks</li>
-                <li>Let's dive deeper into your subjects! You've aced <%=highest_topic.topic%> with an impressive accuracy of <%=highest_topic.accuracy%>%.</li>
-                <li>Looks like you need a little more practice in probability.</li>
-                <li>Don't worry, Knolly has tons of practice questions to help you improve!</li>
-                <!-- Link to specific subject practice questions -->
-            </ul>
-        </nav>
-    </div>
+    
 </section>
 
 <%- include("./partials/footer.ejs") %>

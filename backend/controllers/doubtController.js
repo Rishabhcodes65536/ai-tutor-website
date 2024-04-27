@@ -38,7 +38,9 @@ static showSavedDoubtSummary = async (req, res) => {
 
 static fetchSummary=async (req, res)=> {
   try {
+    console.log(req.body);
     const { question} = req.body;
+    console.log(`${question}`);
     const student_id=req.session._id;
     console.log(req.session.name);
     console.log(student_id);

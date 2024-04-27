@@ -715,7 +715,7 @@ footer .container{
 
 
 .container {
-  padding: 40px;
+  padding: 5px;
 }
 
 .custom-btn {
@@ -799,7 +799,7 @@ body {
   justify-content: space-between;
 } 
 
-.container {
+.containers {
   margin-left: 250px; /* Adjust to match sidebar width */
 }
 
@@ -843,6 +843,13 @@ body {
 
 .Content p{
   color: rgba(var(--default-color-rgb), 0.7);
+  margin: 5px 0 10px 0;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.Content ul li{
+  color: rgba(var(--default-color-rgb), 0.7);
   margin: 5px 0 20px 0;
   font-size: 20px;
   font-weight: 400;
@@ -865,7 +872,7 @@ body {
 }
 
 .custom-container {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .py-4 {
