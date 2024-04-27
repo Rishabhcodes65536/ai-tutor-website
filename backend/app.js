@@ -39,7 +39,7 @@ app.use(session({
     saveUninitialized: false,
     store: new MongoStore({ url: DATABASE_URI }), // Store session data in MongoDB
     cookie: {
-        maxAge: 60 * 60 * 1000, // Session expires after 1 hours
+        maxAge: 60 * 60 * 1000*24, // Session expires after 24 hours
     }
 }));
 

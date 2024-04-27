@@ -82,14 +82,12 @@ class questionController{
                 const Question = req.query.topic;
 
                 // Make API call to fetch data
-                const response = await axios.post("http://20.42.62.249:8081/internal/question_generation/analyse/multi", {
+                const response = await axios.post(req.API_ENDPOINT, {
                     "question":Question
                 });
                 console.log(response)
                 let isQuestion= response.data.response.question;
 
-                //  let parsed_string = JSON.parse(jsonString);
-                // Extract question and steps from the API response
                 if(isQuestion){
                     console.log("yepp");
                 const { question, steps , marks} = response.data.response;
@@ -178,35 +176,6 @@ class questionController{
     }
     }
     static handleMetaSolution=async (req,res)=>{
-       try {
-        //     const { correctOrderHash} = req.body; // Correct order hash sent from client
-        //     const userOrder = req.body.userOrder; // User's submitted order
-        //     const userOrderHash = questionController.hashOrder(userOrder); // Hash the user's submitted order
-            
-        //     // Check if the user's order hash matches the correct order hash
-        //     const isCorrect = userOrderHash === correctOrderHash;
-
-        //     // Allocate marks based on correctness
-        //     const allocatedMarks = isCorrect ? 5 : 0;
-
-        //     // Save the solution in the database
-        //     const { student_id, question, topic, total_marks} = req.body;
-        //     const newMetacognition = new MetaquestionModel({
-        //         student_id,
-        //         question,
-        //         student_response: JSON.stringify(userOrder), // Save user's order as a string
-        //         topic,
-        //         total_marks,
-        //         allocated_marks: isCorrect ? total_marks : 0, // Allocate full marks if correct, else 0
-        //         steps: userOrder // Save user's order steps
-        //     });
-        //     await newMetacognition.save();
-        // res.render('meta_answer.ejs', {
-        //     "data":obj,
-        //     "topic":req.body.topic,
-        //     "abcd":response_from_api.data,
-        //     "user_solution":solution
-        // });
         try {
         // Extract data from the request
         console.log(req.body);
@@ -271,11 +240,7 @@ class questionController{
         console.error('Error handling metacognition solution:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-    }
-    }
+    } 
 
     static shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {

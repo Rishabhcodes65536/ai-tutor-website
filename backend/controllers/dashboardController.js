@@ -10,25 +10,24 @@ const getRandomInt = (min, max) => {
 class dashboardController{
  static getQuestionStats = async (req, res) => {
     try {
-        // Retrieve questions attempted by the student with mode 'answer' or 'metacognition'
+        
         const questions = await questionModel.find({
             student_id: req.session._id
         });
 
-        // Separate questions into 'answer' and 'metacognition' modes
         const answerQuestions = questions.filter(question => {
             return question.mode === 'answer' || !question.mode;
         });
         const metaQuestions = questions.filter(question => question.mode === 'metacognition');
 
-        // Calculate total questions attempted for both modes
+     
         const totalQuestions = questions.length;
         const totalAnswerQuestions = answerQuestions.length;
         const totalMetaQuestions = metaQuestions.length;
 
-        // Calculate number of right answers and wrong answers for both modes
+
         const rightAnswers = questions.reduce((acc, question) => {
-            // Check if the question was answered correctly
+            
             if (question.allocated_marks === question.total_marks) {
                 return acc + 1;
             } else {
@@ -43,15 +42,14 @@ class dashboardController{
             }
         }, 0);
 
-        // Calculate number of wrong answers for both modes
+
         const wrongAnswers = totalQuestions - rightAnswers;
         const wrongAnswersMeta = totalMetaQuestions - rightAnswersMeta;
 
-        // Calculate percentage of right, wrong, and not attempted questions for both modes
+   
         const notAttempted = 100 - (totalQuestions ? ((rightAnswers + wrongAnswers) / totalQuestions) * 100 : 0);
         const notAttemptedMeta = 100 - (totalMetaQuestions ? ((rightAnswersMeta + wrongAnswersMeta) / totalMetaQuestions) * 100 : 0);
 
-        // Prepare data for donut chart for both modes
         const chartData = [
             { label: 'Right', value: rightAnswers },
             { label: 'Right_meta', value: rightAnswersMeta },
@@ -138,12 +136,10 @@ static getSubjectMastery = async (req, res) => {
 
 static getPracticeActivityData = async (req, res) => {
     try {
-        // Fetch data from the questionModel for both answer and metacognition modes
         const questionData = await questionModel.find({ "student_id": req.session._id });
         const answerQuestions = questionData.filter(question => question.mode === 'answer' || !question.mode);
         const metaQuestions = questionData.filter(question => question.mode === 'metacognition');
 
-        // Extract topic name and count attempted questions for each mode
         const topicData = {};
         const metacognitionData = {};
         
@@ -165,7 +161,7 @@ static getPracticeActivityData = async (req, res) => {
             }
         });
 
-        // Combine topicData and metacognitionData into a single object
+        
         const combinedData = {};
         Object.keys(topicData).forEach(topic => {
             combinedData[topic] = {
@@ -180,7 +176,7 @@ static getPracticeActivityData = async (req, res) => {
             };
         });
         console.log(topicData,metacognitionData,combinedData)
-        // Respond with the extracted data
+        
         res.render('dashboardthree.ejs', {
             combinedData: combinedData,
             topicVariables: Object.keys(combinedData),
