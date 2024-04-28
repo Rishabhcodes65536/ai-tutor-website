@@ -43,7 +43,7 @@
           <div class="buttonWrapper">
             <% topics.forEach(topic => { %>
               <% if (mode === 'answer') { %>
-                <a class="custom-btn" href="./answer?topic=<%= topic.name %>" role="button"><%= topic.name %></a>
+                <a class="custom-btn" href="../answer?topic=<%= topic.name %>" role="button"><%= topic.name %></a>
               <% } else if (mode === 'metacognition') { %>
                 <a class="custom-btn" href="../metacognition?topic=<%= topic.name %>" role="button"><%= topic.name %></a>
               <% } %>

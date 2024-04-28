@@ -6,5 +6,5 @@ import sessionCheckMiddleware from "../middlewares/sessioncheck.js";
 router.use(sessionCheckMiddleware);
 
 router.get("/:mode",questionController.getTopics)
-
+router.get("/",questionController.getModes)
 export default router;

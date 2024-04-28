@@ -162,8 +162,6 @@ class questionController{
             question:question,
             marks:marks
         }
-        const correctSteps=steps.map(step => step.solution_step);
-
         res.render('answer.ejs', {
             "data":obj,
             "topic":req.body.topic,
@@ -227,7 +225,7 @@ class questionController{
         console.log(mongoSving);
         res.render('metacognition.ejs', { 
             question, 
-            newsteps:steps, 
+            steps:steps, 
             correctOrder:correctOrderNumbers, 
             topic, 
             total_marks,

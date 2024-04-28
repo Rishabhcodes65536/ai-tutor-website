@@ -23,7 +23,21 @@
         .card-text {
             margin-bottom: 0;
         }
+        .credit-card-container {
+            display: flex;
+        }
 
+        .credit-card-container input[id^="step"] {
+            width: calc(100% / <%= steps.length %>); /* Adjust width based on steps.size */
+            text-align: center;
+            margin-right: 5px;
+        }
+
+        /* Style for dash separators */
+        .credit-card-container input[id^="step"]::after {
+            content: "-";
+            margin-left: 5px;
+        }
     </style>
 </head>
 
@@ -39,8 +53,8 @@
                 <a href="/topic/metacognition" class="btn btn-outline-secondary">Back to topic</a>
             </div>
 
-            <div class="answer_container solution-cards-container">
-                <form class="form container" method="post">
+            <div class="meta_container solution-cards-container">
+                <form class="form container credit-card-form" method="post">
                     <input type="hidden" id="question" name="question" value="<%= question %>">
                     <input type="hidden" id="marks" name="total_marks" value="<%= total_marks %>">
                     <input type="hidden" id="topic" name="topic" value="<%= topic %>">
@@ -48,7 +62,7 @@
 
                     <h1 class="title"><%= question %></h1>
 
-                    <% if (!locals.newsteps) { %>
+                    <% if (!locals.submittedOrder) { %>
                         <% steps.forEach((step, index) => { %>
                             <input type="hidden" id="topic" name="steps" value="<%= step %>">
                             <div class="card">
@@ -58,21 +72,33 @@
                             </div>
                         <% }); %>
                         <label for="solve" class="form-label">Order:</label>
+                    <div class="credit-card-container">
                         <% steps.forEach((step, index) => { %>
-                        <input type="number" id="step <%= index %>" name="userResponse" class="form-control meta-step" maxlength="1" size="3" required>
-                        <%})%>
+                        <input type="number" id="step <%= index %>" name="userResponse" class="form-control meta-step credit-card-input" maxlength="1" size="3" required>
+                       <% }) %>
+                        </div>
                         <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                        <div class="error-container"></div>
                     <% } else { %>
                     <div class="container">
-                        <% newsteps.forEach((step, index) => { %>
+                        <% steps.forEach((step, index) => { %>
                             <div class="card <%= rishabhArray[index] ? 'bg-green' : 'bg-red' %>">
                                 <div class="card-body">
                                     <p class="card-text"><%= index + 1 %>. <%= step %></p>
                                 </div>
                             </div>
                         <% }); %>
-
-                        <h4 class="allocated_meta">Allocated Marks: <%= allocated_marks %></h4>
+                        <%if(isCorrect){%>
+                        <div class="alert alert-success" role="alert">
+                              <div class="allocated_meta">Correct Answer Hoorah 🥳!!</div>
+                              <h4  class="allocated_meta">Marks Awarded: <%= allocated_marks %></h4>
+                         </div>
+                        <%}else{%>
+                            <div class="alert alert-danger allocated_meta" role="alert">
+                                Wrong Answer 😔!!
+                             <div class="marks_awarded">Marks awarded:<%=allocated_marks%></div>
+                            </div>
+                        <%}%>
                     </div>
                     <% } %>
                 </form>
@@ -81,4 +107,106 @@
     </section>
 
     <%- include("./partials/footer.ejs") %>
+    <!-- <script>
+        $(document).ready(function() {
+        $('[id^="step"]').on('input', function() {
+            var $this = $(this);
+            var val = $this.val();
+            if (val.length === 1) {
+                $this.next('input').focus();
+            }
+        });
+
+        $('[id^="step"]').on('input', function() {
+            var val = $(this).val().replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            var uniqueVals = Array.from(new Set(val.split(''))).join(''); // Remove duplicates
+            $(this).val(uniqueVals);
+        });
+
+         $('.credit-card-input').on('input', function() {
+        var index = $(this).data('index');
+        var currentValue = $(this).val();
+        var isValid = true;
+
+        // Check if the current value exists in any previous input field
+        $('.credit-card-input').each(function() {
+            if ($(this).data('index') < index && $(this).val() == currentValue) {
+                isValid = false;
+                return false; // Exit the loop if duplicate is found
+            }
+        });
+
+        if (!isValid) {
+            // Clear the input field if duplicate is found
+            $(this).val('');
+        }
+
+        if ($(this).val().length == $(this).attr('maxlength')) {
+            // Move cursor to the next input field
+            $('[data-index="' + (index + 1) + '"]').focus();
+        }
+    });
+    });
+
+    </script> -->
+<script>
+    $(document).ready(function() {
+        $('.credit-card-input').on('input', function() {
+            var maxLength = parseInt($(this).attr('maxlength'), 10);
+            var currentValue = $(this).val().replace(/\D/g, ''); // Remove non-digit characters
+            var nextInput = $(this).next('.credit-card-input');
+
+            // Update current input value with only digits and limited to maxlength
+            $(this).val(currentValue.slice(0, maxLength));
+
+            if (currentValue.length === maxLength && nextInput.length > 0) {
+                nextInput.focus();
+            }
+        });
+
+        $('.credit-card-input').on('keypress', function(e) {
+            var keyCode = e.which ? e.which : e.keyCode;
+            if (keyCode < 48 || keyCode > 57) {
+                e.preventDefault(); // Prevent non-digit key presses
+            }
+        });
+    });
+
+
+    $('.credit-card-form').on('submit', async function(e) {
+            e.preventDefault(); // Prevent form submission
+            console.log("submitted!");
+            var validValues = []; // Array to store valid values temporarily
+            var errorContainer = $('.error-container');
+
+            await $('.credit-card-input').each(function() {
+                var value = $(this).val();
+                if (value.length === 1) {
+                    // Check for duplicates in validValues
+                    if (!validValues.includes(value)) {
+                        validValues.push(value);
+                    }
+                } else {
+                    // If any input field is empty or contains more than one digit, prevent form submission
+                    e.preventDefault();
+                    alert('Please enter valid single-digit values in all input fields.');
+                    return false; // Exit the loop
+                }
+            });
+
+            if (validValues.length !== $('.credit-card-input').length) {
+                // If there are missing or duplicate values, prevent form submission
+                e.preventDefault();
+                 errorContainer.html('<div class="alert alert-danger text-center" role="alert">Please ensure there are no missing or duplicate values in input fields.</div>');
+                return false;
+            }
+
+            // If all conditions are met, you can proceed with form submission
+            // alert('Form submission allowed.');
+            // Uncomment the line below to submit the form programmatically
+            $(this).off('submit').submit(); 
+        });
+</script>
+
+
 </body>
