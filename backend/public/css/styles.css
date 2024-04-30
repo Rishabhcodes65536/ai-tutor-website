@@ -12,7 +12,7 @@
   --default-color-rgb: 33, 37, 41;
   --heading-color: #7a6960;
   --heading-color-rgb: 122, 105, 96;
-  --accent-color: #eb5d1e;
+  --accent-color: #2a3891;
   --accent-color-rgb: 235, 93, 30;
   --contrast-color: #ffffff;
   --contrast-color-rgb: 255, 255, 255;
@@ -21,9 +21,9 @@
 /* Nav Menu Colors */
 :root {
   --nav-color: #212529;
-  --nav-hover-color: #eb5d1e;
+  --nav-hover-color: #2A3891;
   --nav-dropdown-color: #212529;
-  --nav-dropdown-hover-color: #eb5d1e;
+  --nav-dropdown-hover-color: #2a3891;
   --nav-dropdown-background-color: #ffffff;
 }
 
@@ -94,7 +94,7 @@ h6 {
 .header .btn-getstarted,
 .header .btn-getstarted:focus {
   color: var(--contrast-color);
-  background: var(--accent-color);
+  background: #2a3891;
   font-size: 14px;
   padding: 8px 25px;
   margin: 0 0 0 30px;
@@ -410,6 +410,11 @@ h6 {
   }
 }
 
+@media screen and (max-width: 768px) {
+  [data-aos-delay] {
+    transition-delay: 0 !important;
+  }
+}
 
 .hero {
   background: #f4f4f4;
@@ -676,6 +681,40 @@ footer .container{
   font-size: 1rem;
   font-weight: 300;
   margin: 2em 0;
+}
+
+
+/*--------------------------------------------------------------
+# Scroll Top Button
+--------------------------------------------------------------*/
+.scroll-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: 15px;
+  z-index: 99999;
+  background-color: var(--accent-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  transition: all 0.4s;
+}
+
+.scroll-top i {
+  font-size: 24px;
+  color: var(--contrast-color);
+  line-height: 0;
+}
+
+.scroll-top:hover {
+  background-color: rgba(var(--accent-color-rgb), 0.8);
+  color: var(--contrast-color);
+}
+
+.scroll-top.active {
+  visibility: visible;
+  opacity: 1;
 }
 
 
@@ -1127,4 +1166,11 @@ body {
 .equation-container > span {
     display: inline-block;
     margin: 0 5px;
+}
+
+
+.next-ques{
+  display: flex;
+  justify-content: flex-end;
+  float: right;
 }

@@ -20,11 +20,10 @@ class questionController{
     { id: 3, name: 'Algebra' },
     { id: 4, name: 'Geometry' },
     { id: 5, name: 'Trigonometry' },
-    { id: 6, name: 'Calculus' },
-    { id: 7, name: 'Statistics' },
-    { id: 8, name: 'Probability' },
-    { id: 9, name: 'Linear Algebra' },
-    { id: 10, name: 'Number Theory' }
+    { id: 6, name: 'Statistics' },
+    { id: 7, name: 'Probability' },
+    { id: 8, name: 'Linear Algebra' },
+    { id: 9, name: 'Number Theory' }
     ];
     console.log(req.session._id);
     console.log(modeName);
@@ -163,6 +162,7 @@ class questionController{
             question:question,
             marks:marks
         }
+        console.log(req.body.topic);
         res.render('answer.ejs', {
             "data":obj,
             "topic":req.body.topic,
