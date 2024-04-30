@@ -13,15 +13,23 @@
     </div>
     <div class="answer_container">
         <form class="form" method="post">
-            <input type="hidden" id="question" name="question" value="<%= data.question %>">
-            <input type="hidden" id="marks" name="marks" value="<%= data.marks %>">
-            <input type="hidden" id="topic" name="topic" value="<%= topic %>">
-            <h1 class="title"><%= data.question %></h1>
-            <%if(!locals.abcd){%>
-            <label for="answer" class="form-label">Answer:</label>
-            <textarea id="answer" name="solution" rows="5" cols="50" class="Input-Box" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
-            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
-            <%}%>
+    <input type="hidden" id="question" name="question" value="<%= data.question %>">
+    <input type="hidden" id="marks" name="marks" value="<%= data.marks %>">
+    <input type="hidden" id="topic" name="topic" value="<%= topic %>">
+    <h1 class="title"><%= data.question %></h1>
+    <% if(!locals.abcd) { %>
+    <label for="answer" class="form-label">Answer:</label>
+   
+    <textarea id="answer" name="solution" rows="5" cols="50" class="Input-Box" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
+     <div class="container">
+        <!-- Buttons for integration, differentiation, and exponential -->
+        <label for="answer" class="form-label">Special Symbols:</label>
+        <button type="button" onclick="appendToAnswer('∫')">∫</button>
+        <button type="button" onclick="appendToAnswer('d/dx')">d/dx</button>
+        <button type="button" onclick="appendToAnswer('e^')">e^</button>
+    </div>
+    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+    <% } %>
             <h3 class="marks">Marks: <%= data.marks %></h3>
         </form>
         <% if(locals.abcd){%>
@@ -49,5 +57,50 @@
 </section>
 </body>
 </html>
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script>
+    // Function to append symbols to the answer textarea
+    function appendToAnswer(symbol) {
+    var answerTextarea = document.getElementById('answer');
+    var cursorPosition = answerTextarea.selectionStart;
+    var answerText = answerTextarea.value;
+    var newText = answerText.substring(0, cursorPosition) + symbol + answerText.substring(cursorPosition);
+    answerTextarea.value = newText;
+    }
+    // Function to append a derivative box
+    function appendDerivativeBox() {
+    var answerDiv = document.getElementById('answer');
+    var derivativeBox = document.createElement('span');
+    derivativeBox.className = 'derivative-box';
+    derivativeBox.contentEditable = true;
+    derivativeBox.style.border = '1px solid black';
+    derivativeBox.style.padding = '2px';
+    derivativeBox.innerHTML = '&boxh;';
+    answerDiv.appendChild(derivativeBox);
+}
+$(document).ready(function() {
+     $("#addDerivativeButton").click(function() {
+        var numeratorBox = $("<div>", {
+            class: "numerator-box derivative-box",
+            contenteditable: true,
+            placeholder: "Numerator"
+        });
+
+        var denominatorBox = $("<div>", {
+            class: "denominator-box derivative-box",
+            contenteditable: true,
+            placeholder: "Denominator"
+        });
+        $("#answer").append("d/d").append(numeratorBox).append(denominatorBox);
+    });
+});
+
+
+
+
+</script>
 
 <%- include("./partials/footer.ejs") %>

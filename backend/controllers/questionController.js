@@ -45,6 +45,7 @@ class questionController{
             console.log(req.query.topic + " problem")
             let response = await axios.post(API_ENDPOINT, {
             question:req.query.topic + " problem",
+
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -52,7 +53,7 @@ class questionController{
             }
         });
         // let parsed_string=JSON.parse(response.data.response);
-        // console.log(parsed_string); 
+        console.log(response); 
         let jsonString = response.data.response.match(/```json([\s\S]*)```/)[1].trim();
 
         let parsed_string = JSON.parse(jsonString);

@@ -60,7 +60,16 @@ class dashboardController{
         ];
 
         console.log(chartData);
-        
+        const requestData = {
+  number: 10
+};
+const headers = {
+  'Accept': '*/*',
+  'Content-Type': 'application/json'
+};
+        const TOP_STUDENTS=await axios.post('http://20.42.62.249:8081/internal/question_generation/analyse/analyse_with_top', requestData, { headers });
+        console.log(TOP_STUDENTS.data.student_rank_with_order);
+        const TOP_DATA=TOP_STUDENTS.data.student_rank_with_order;
         res.render('dashboardone.ejs', {
             "Right": chartData[0].value,
             "Right_meta": chartData[1].value,
@@ -69,7 +78,8 @@ class dashboardController{
             "NA": chartData[4].value,
             "NA_meta": chartData[5].value,
             "page_id": '1',
-            "name": req.session.name.split(' ')[0]
+            "name": req.session.name.split(' ')[0],
+            LEADERBOARD:TOP_DATA
         });
     } catch (error) {
         console.error('Error fetching question stats:', error);

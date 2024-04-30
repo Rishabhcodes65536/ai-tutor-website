@@ -840,6 +840,12 @@ body {
     transition: color 0.3s ease; /* Add transition effect */
 }
 
+.img-container{
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+}
+
 
 .Content p{
   color: rgba(var(--default-color-rgb), 0.7);
@@ -992,6 +998,21 @@ body {
 .card-title-custom {
     text-align: center;
 }
+.modes .card-body{
+  /* height:95vh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+
+.modes .card-text{
+  margin-top: 5vh;
+  /* height:20vh; */
+  text-align: left;
+  /* overflow: auto; */
+}
 
 /* Adjust button margin */
 #submit-btn,
@@ -1073,4 +1094,37 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+
+
+
+
+/* math section  */
+
+.position-relative {
+    position: relative;
+}
+
+.numerator-box,
+.denominator-box {
+    border: 1px solid black;
+    padding: 2px;
+    margin: 2px;
+    min-height: 20px;
+    width: calc(50% - 6px); /* Adjust width as needed */
+    display: inline-block;
+}
+
+.equation {
+    border: 1px solid black;
+    padding: 5px;
+    min-height: 150px; /* Adjust initial height */
+    width: 100%; /* Adjust width as needed */
+    position: relative;
+}
+
+.equation-container > span {
+    display: inline-block;
+    margin: 0 5px;
 }

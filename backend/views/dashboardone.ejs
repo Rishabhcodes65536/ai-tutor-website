@@ -76,13 +76,10 @@
                     <div class="sidebar2">
                         <nav class="py-1">
                             <ul class="flex-column">
-                                <li class="mb-1"> <b>Top Knolly Students this Month</b></li>
-                                <li>Sanyam Singh</li>
-                                <li>Rishabh Jain</li>
-                                <li>Aviral</li>
-                                <li>Arushi</li>
-                                <li>Ranveer</li>
-                                <li>Erwin</li>
+                                <li class="mb-1"><b>Top Knolly Students this Month</b></li>
+                                <% LEADERBOARD.forEach(student => { %>
+                                    <li><%= student %></li>
+                                <% }); %>
                             </ul>
                         </nav>
                     </div>
