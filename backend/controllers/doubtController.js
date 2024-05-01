@@ -12,6 +12,7 @@ static showDoubtsPrompt = async(req, res) =>{
     const recentDoubts = await Doubt.find({ student_id: req.session._id })
       .sort({ timestamp: -1 }) // Sort by timestamp in descending order
       .limit(5);
+
     res.render('doubt.ejs', { "name": req.session.name.split(' ')[0], "_id": req.session._id,recentDoubts});
   } catch (error) {
     console.error('Error rendering doubts prompt:', error);
@@ -28,6 +29,7 @@ static showSavedDoubtSummary = async (req, res) => {
     // Render the summary page with doubt details
     const question = doubt.question;
     const answer = doubt.answer;
+    const response_type="follow_up";
     res.render('summary.ejs', { question, answer });
   } catch (error) {
     console.error('Error rendering doubt summary:', error);
@@ -58,6 +60,7 @@ static fetchSummary=async (req, res)=> {
     await doubt.save();
     const data = response.data;
     const formattedAnswer =await answer.replace(/\n/g, '<br>');
+    const response_type="new_query";
     res.render('summary.ejs', { answer:formattedAnswer,"question":question});
   } catch (error) {
     console.error('Error fetching summary:', error);

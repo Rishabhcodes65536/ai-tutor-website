@@ -38,13 +38,16 @@ class questionController{
 }
     static fetchApi=async (req,res)=>{
         try {
+            const latestQuestion = await questionModel.findOne({ topic: req.query.topic, student_id: req.session._id }).sort({ attempted_at: -1 }).limit(1).select('question');
+            console.log(latestQuestion.question);
+            const past_question=latestQuestion ? (latestQuestion.question) : ("");
             // console.log(req);
             const API_ENDPOINT=req.API_ENDPOINT;
             console.log(API_ENDPOINT);
             console.log(req.query.topic + " problem")
             let response = await axios.post(API_ENDPOINT, {
             question:req.query.topic + " problem",
-
+            past_question,
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -131,15 +134,22 @@ class questionController{
         // Extract data from the form submission
         
         console.log(req.body);
-        const {solution,question,marks} = req.body;
+        const {solution,question,marks,final_answer} = req.body;
+        if(!solution){
+            solution="";
+        }
+        if(!final_answer){
+            final_answer="";
+        }
         // const { question, marks } = req.body;
-        console.log(solution,question,marks);
+        console.log(solution,question,marks,final_answer);
         // Make POST request to the API
-        const SOLUTION_API=req.SOLUTION_API_ENDPOINT
+        const SOLUTION_API=req.SOLUTION_API_ENDPOINT;
         const response_from_api = await axios.post(SOLUTION_API, {
             question:question,
             marks:marks,
-            answer: solution
+            answer: solution,
+            final_answer:final_answer
         }, {
             headers: {
                 'Content-Type': 'application/json',
