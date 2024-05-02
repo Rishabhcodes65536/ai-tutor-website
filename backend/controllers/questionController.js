@@ -38,9 +38,10 @@ class questionController{
 }
     static fetchApi=async (req,res)=>{
         try {
-            const latestQuestion = await questionModel.findOne({ topic: req.query.topic, student_id: req.session._id }).sort({ attempted_at: -1 }).limit(1).select('question');
-            console.log(latestQuestion.question);
-            const past_question=latestQuestion ? (latestQuestion.question) : ("");
+            const latestQuestion = await questionModel.find({ topic: req.query.topic, student_id: req.session._id }).sort({ attempted_at: -1 }).limit(1).select('question');
+            // console.log(latestQuestion.question);
+            const past_question=latestQuestion[0] ? (latestQuestion[0].question) : ("");
+            console.log("PAST QUESTION IS:"+past_question);
             // console.log(req);
             const API_ENDPOINT=req.API_ENDPOINT;
             console.log(API_ENDPOINT);
@@ -56,18 +57,20 @@ class questionController{
         });
         // let parsed_string=JSON.parse(response.data.response);
         console.log(response); 
-        let jsonString = response.data.response.match(/```json([\s\S]*)```/)[1].trim();
+        const parsed_string=response.data.response;
+        console.log(parsed_string);
+        // let jsonString = response.data.response.match(/```json([\s\S]*)```/)[1].trim();
 
-        let parsed_string = JSON.parse(jsonString);
-        if(parsed_string){
+        // let parsed_string = JSON.parse(jsonString);
+        if(parsed_string && parsed_string.question){
         console.log("YEPPP!");
-        req.question=parsed_string[0].question;
-        req.marks=parsed_string[0].marks;
-        res.set('question',parsed_string[0].question);
-        res.set('marks',parsed_string[0].marks);
-        console.log(res.headers);
+        req.question=parsed_string.question;
+        req.marks=parseInt(parsed_string.marks);
+        // res.set('question',parsed_string.question);
+        // res.set('marks',parsed_string.marks);
+        // console.log(res.headers);
         res.render('\answer.ejs',{
-            "data":parsed_string[0],
+            "data":parsed_string,
             "topic":req.query.topic,
             });
         }

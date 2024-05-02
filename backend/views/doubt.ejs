@@ -16,7 +16,7 @@
 
         <!-- Input Prompt -->
         <div class="col-md-12 mt-4 mx-auto"> <!-- Added mx-auto class for centering -->
-        <form action="/doubt" id="doubt-container" method="POST">
+        <form action="/doubt?response_type=new_query" id="doubt-container" method="POST">
             <textarea class="form-control" id="doubt-textarea" name="question" rows="6" placeholder="Ask your question here..."></textarea>
             <button type="submit" class="btn btn-primary mt-3">Submit</button> <!-- Added mt-3 class for margin top -->
         </form>
@@ -35,7 +35,7 @@
                     <div class="card-body recent-card justify-content-between">
                         <h5 class="card-title card-title-custom"><%= doubt.question %></h5>
                         <p class="card-text card-text-custom"><%= doubt.solution %></p>
-                        <a href="/doubt/<%= doubt._id %>" class="btn btn-primary view-summary-btn">View Summary</a>
+                        <a href="/doubt/<%= doubt._id %>?response_type=follow_up" class="btn btn-primary view-summary-btn">View Summary</a>
                     </div>
                 </div>
             <% }); %>
