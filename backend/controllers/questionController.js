@@ -180,7 +180,8 @@ class questionController{
             "data":obj,
             "topic":req.body.topic,
             "abcd":response_from_api.data,
-            "user_solution":solution
+            "user_solution":solution,
+            "final_answer":final_answer
         });
     } catch (error) {
         console.error('Error:', error);

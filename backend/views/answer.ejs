@@ -25,7 +25,6 @@ function goBack() {
     <h1 class="title"><%= data.question %></h1>
     <% if(!locals.abcd) { %>
     <label for="answer" class="form-label">Steps:</label>
-   
     <textarea id="answer" name="solution" rows="5" cols="50" class="Input-Box" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
     <label for="final_answer" class="form-label">Final Answer:</label>
     <textarea id="final_answer" name="final_answer" rows="2" cols="50" class="Input-Box-Final" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
@@ -59,7 +58,8 @@ function goBack() {
                     Wrong Answer 😔!!
                 <div class="marks_awarded">Marks awarded:<%=abcd.response.marks_awarded_to_student%></div>
                 <div class="feedback"><%-abcd.response.feedback%></div>
-                <div class="statement">The answer you gave was <%-user_solution%></div>
+                <div class="statement">The solution steps you gave was <%-user_solution%></div>
+                <div class="statement">Your final answer was <%-final_answer%></div>
 
             </div>
             <%}%>
