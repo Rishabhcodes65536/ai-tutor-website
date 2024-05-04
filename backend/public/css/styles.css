@@ -726,7 +726,6 @@ footer .container{
   color: rgbargba(10, 15, 7, 0.68);
   margin:20px 20px 40px 25px;
   font-family: Georgia, 'Times New Roman', Times, serif;
-
 }
 
 .buttonWrapper {
@@ -803,6 +802,14 @@ body, html {
   background-color: white;
 }
 
+.back_to_container{
+margin-left: 100px;
+}
+
+.back_to a{
+  margin-right: 37.7vw;
+  margin-bottom: 3vh;
+}
 
 .sidebar {
   width: 110px; /* Adjust width as needed */
@@ -1179,4 +1186,11 @@ body {
   display: flex;
   justify-content: flex-end;
   float: right;
+}
+
+
+.follow-buttons{
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 }

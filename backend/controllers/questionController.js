@@ -38,14 +38,26 @@ class questionController{
 }
     static fetchApi=async (req,res)=>{
         try {
-            const latestQuestion = await questionModel.find({ topic: req.query.topic, student_id: req.session._id }).sort({ attempted_at: -1 }).limit(1).select('question');
-            // console.log(latestQuestion.question);
+            const latestQuestion = await questionModel.find({ topic: req.query.topic, student_id: req.session._id }).sort({ attempted_at: -1 }).limit(1);
+            // console.log(latestQuestion[0]);
+            console.log(req.query);
+            const retryLatestQuestion=latestQuestion[0];
+            console.log("Latest Question is" + retryLatestQuestion);
+
             const past_question=latestQuestion[0] ? (latestQuestion[0].question) : ("");
             console.log("PAST QUESTION IS:"+past_question);
             // console.log(req);
+
             const API_ENDPOINT=req.API_ENDPOINT;
             console.log(API_ENDPOINT);
             console.log(req.query.topic + " problem")
+            var parsed_string="";
+            if(req.query.retry){
+                console.log("entered the retry block")
+                parsed_string=retryLatestQuestion
+                parsed_string.marks=retryLatestQuestion.total_marks;
+            }
+            else{
             let response = await axios.post(API_ENDPOINT, {
             question:req.query.topic + " problem",
             past_question,
@@ -55,10 +67,11 @@ class questionController{
                 'Accept': '*/*'
             }
         });
+            // console.log(response); 
+            parsed_string=response.data.response;
+            console.log(parsed_string);
+        }
         // let parsed_string=JSON.parse(response.data.response);
-        console.log(response); 
-        const parsed_string=response.data.response;
-        console.log(parsed_string);
         // let jsonString = response.data.response.match(/```json([\s\S]*)```/)[1].trim();
 
         // let parsed_string = JSON.parse(jsonString);
@@ -86,14 +99,12 @@ class questionController{
         static fetchMetaApi=async (req,res)=>{
         try {
                 const Question = req.query.topic;
-
                 // Make API call to fetch data
                 const response = await axios.post(req.API_ENDPOINT, {
                     "question":Question
                 });
                 console.log(response)
                 let isQuestion= response.data.response.question;
-
                 if(isQuestion){
                     console.log("yepp");
                 const { question, steps , marks} = response.data.response;
@@ -167,7 +178,8 @@ class questionController{
             topic:req.query.topic,
             total_marks:marks,
             allocated_marks:response_from_api.data.response.marks_awarded_to_student,
-            feedback:response_from_api.data.response.feedback
+            feedback:response_from_api.data.response.feedback,
+            final_answer:final_answer
         })
         const mongodbSaving=await questionDoc.save();
         console.log(mongodbSaving);
@@ -199,16 +211,18 @@ class questionController{
         const correctOrderNumbers = correctOrderArray.map(Number);
         let isCorrect = true;
         const rishabhArray = [];
+        for(var i=0;i<correctOrder.length;i++){
+            rishabhArray.push(0);
+        }
         const newsteps=[];
         for (let i = 0; i < correctOrder.length; i++) {
         if (correctOrderNumbers[i] != userResponse[i]) {
             console.log(correctOrderNumbers[i]);
             console.log(userResponse[i]);
             isCorrect = false;
-            rishabhArray.push(0);
         }
         else{
-            rishabhArray.push(1);
+            rishabhArray[correctOrderArray[i]-1]=1;
         }
         }
         console.log(newsteps);
@@ -242,7 +256,7 @@ class questionController{
             question, 
             steps:steps, 
             correctOrder:correctOrderNumbers, 
-            topic, 
+            topic,
             total_marks,
             submittedOrder,
             isCorrect,

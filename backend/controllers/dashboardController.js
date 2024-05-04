@@ -96,11 +96,10 @@ static getSubjectMastery = async (req, res) => {
             { id: 3, name: 'Algebra' },
             { id: 4, name: 'Geometry' },
             { id: 5, name: 'Trigonometry' },
-            { id: 6, name: 'Calculus' },
-            { id: 7, name: 'Statistics' },
-            { id: 8, name: 'Probability' },
-            { id: 9, name: 'Linear Algebra' },
-            { id: 10, name: 'Number Theory' }
+            { id: 6, name: 'Statistics' },
+            { id: 7, name: 'Probability' },
+            { id: 8, name: 'Linear Algebra' },
+            { id: 9, name: 'Number Theory' }
         ];
 
         let highestAccuracyTopic = { topic: '', accuracy: 0 };
@@ -135,7 +134,7 @@ static getSubjectMastery = async (req, res) => {
             accuracyData: accuracyData,
             highest_topic: highestAccuracyTopic,
             "page_id": "2",
-            "name": req.session.name
+            "name": req.session.name.split(' ')[0]
         });
     } catch (error) {
         console.error('Error:', error);
@@ -191,7 +190,7 @@ static getPracticeActivityData = async (req, res) => {
             combinedData: combinedData,
             topicVariables: Object.keys(combinedData),
             "page_id": "3",
-            "name": req.session.name
+            "name": req.session.name.split(' ')[0]
         });
     } catch (error) {
         console.error('Error fetching practice activity data:', error);

@@ -13,6 +13,10 @@ const questionSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  final_answer: {
+    type: String,
+    default: ''
+  },
   topic: String,
   total_marks: {
     type: Number, // Corrected type definition

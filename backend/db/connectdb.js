@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 const connectDB =
     async (DATABASE_URI) =>{
         try {
-
         const DB_OPTIONS={
             dbName:'knolly' 
         }

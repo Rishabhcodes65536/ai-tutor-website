@@ -92,12 +92,15 @@
                         <%if(isCorrect){%>
                         <div class="alert alert-success" role="alert">
                               <div class="allocated_meta">Correct Answer Hoorah 🥳!!</div>
-                              <h4  class="allocated_meta">Marks Awarded: <%= allocated_marks %></h4>
+                              <div  class="allocated_meta">Marks Awarded: <%= allocated_marks %></div>
+                              <div  class="allocated_meta">Your ordered steps are:  <%=submittedOrder%></div>
                          </div>
                         <%}else{%>
                             <div class="alert alert-danger allocated_meta" role="alert">
                                 Wrong Answer 😔!!
                              <div class="marks_awarded">Marks awarded:<%=allocated_marks%></div>
+                             <div  class="allocated_meta">Your ordered steps are:  <%=submittedOrder%></div>
+                             <div  class="allocated_meta">The correct order is:  <%=correctOrder%></div>
                             </div>
                         <%}%>
                         <a class="custom-btn next-ques" role="button" href="../metacognition?topic=<%=topic%>">Next question<i class="bi bi-arrow-right-short"></i></a>

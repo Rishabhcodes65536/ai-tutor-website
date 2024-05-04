@@ -5,17 +5,40 @@
 <section class="d-flex align-items-stretch">
 <script>
 function goBack() {
-        console.log("back button clicked")
-        window.history.back();
+    console.log("back button clicked");
+    var currentURL = window.location.href;
+    var newURL;
+
+    // Check if the current URL already contains query parameters
+    if (currentURL.indexOf('retry=true') === -1) {
+        // If 'retry=true' not found, append it to the URL
+        if (currentURL.indexOf('?') !== -1) {
+            // If there are existing query parameters, append '&retry=true'
+            newURL = currentURL + '&retry=true';
+        } else {
+            // If there are no existing query parameters, append '?retry=true'
+            newURL = currentURL + '?retry=true';
+        }
+    } else {
+        // 'retry=true' already exists, keep the URL as it is
+        newURL = currentURL;
+    }
+
+    // Log the modified URL for debugging
+    console.log(newURL);
+
+    // Navigate back to the modified URL
+    window.location.href = newURL;
 }
 </script>
 <%- include("./partials/side_navbar.ejs")%>
 
 <div class="container question-content-wrapper">
-    <div class="top-bar d-flex align-items-center  questionheader justify-content-between">
+    <div class="top-bar d-flex align-items-center  questionheader">
             <h1 class="title-question">Question on <%= topic %></h1>
-            
-        <a href="/topic/answer" class="btn btn-outline-secondary">Back to topic</a>
+    </div>
+    <div class="top-bar d-flex align-items-center  questionheader back_to">
+        <a href="/topic/answer" class="btn btn-outline-secondary back_to_topic">Back to topic</a>
     </div>
     <div class="answer_container">
         <form class="form" method="post">
@@ -25,9 +48,9 @@ function goBack() {
     <h1 class="title"><%= data.question %></h1>
     <% if(!locals.abcd) { %>
     <label for="answer" class="form-label">Steps:</label>
-    <textarea id="answer" name="solution" rows="5" cols="50" class="Input-Box" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
+    <textarea id="answer" name="solution" required="true" rows="5" cols="50" class="Input-Box" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
     <label for="final_answer" class="form-label">Final Answer:</label>
-    <textarea id="final_answer" name="final_answer" rows="2" cols="50" class="Input-Box-Final" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
+    <textarea id="final_answer" name="final_answer"  required="true" rows="2" cols="50" class="Input-Box-Final" placeholder="Enter your answer here" onkeypress="handleKeyPress(event)"></textarea>
      <div class="container">
         <!-- Buttons for integration, differentiation, and exponential -->
         <label for="answer" class="form-label">Special Symbols:</label>
@@ -50,7 +73,8 @@ function goBack() {
                 <div class="marks_awarded">Marks awarded:<%=abcd.response.marks_awarded_to_student%></div>
                 <div class="feedback">
                 <div class="api-feedback"><%-abcd.response.feedback%></div>
-                <div class="statement">The answer you gave was <%-user_solution%></div>
+                 <div class="statement">The solution steps you gave was <%-user_solution%></div>
+                <div class="statement">Your final answer was <%-final_answer%></div>
                 </div>
                 
             <%} else{%>
@@ -63,7 +87,7 @@ function goBack() {
 
             </div>
             <%}%>
-            <button class="custom-btn retry-btn" onclick="goBack()">Retry</button>
+            <a class="custom-btn retry-btn" role="button" href="../answer?topic=<%=topic%>&retry=true">Retry</a>
             <a class="custom-btn next-ques" role="button" href="../answer?topic=<%=topic%>">Next question<i class="bi bi-arrow-right-short"></i></a>
         <%}%>
     </div>
