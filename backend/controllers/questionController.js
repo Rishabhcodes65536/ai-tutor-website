@@ -36,66 +36,55 @@ class questionController{
 
     // res.render('dashboard.ejs',{"user":req.session._id});
 }
-    static fetchApi=async (req,res)=>{
+    static fetchApi = async (req, res) => {
+    let retryCount = 0;
+    const maxRetry = 3; // Maximum number of retry attempts
+    while (retryCount < maxRetry) {
         try {
             const latestQuestion = await questionModel.find({ topic: req.query.topic, student_id: req.session._id }).sort({ attempted_at: -1 }).limit(1);
-            // console.log(latestQuestion[0]);
-            console.log(req.query);
-            const retryLatestQuestion=latestQuestion[0];
-            console.log("Latest Question is" + retryLatestQuestion);
+            const retryLatestQuestion = latestQuestion[0];
+            const past_question = latestQuestion[0] ? (latestQuestion[0].question) : ("");
+            const API_ENDPOINT = req.API_ENDPOINT;
+            let parsed_string = "";
 
-            const past_question=latestQuestion[0] ? (latestQuestion[0].question) : ("");
-            console.log("PAST QUESTION IS:"+past_question);
-            // console.log(req);
-
-            const API_ENDPOINT=req.API_ENDPOINT;
-            console.log(API_ENDPOINT);
-            console.log(req.query.topic + " problem")
-            var parsed_string="";
-            if(req.query.retry){
-                console.log("entered the retry block")
-                parsed_string=retryLatestQuestion
-                parsed_string.marks=retryLatestQuestion.total_marks;
+            if (req.query.retry) {
+                parsed_string = retryLatestQuestion;
+                parsed_string.marks = retryLatestQuestion.total_marks;
+            } else {
+                let response = await axios.post(API_ENDPOINT, {
+                    question: req.query.topic + " problem",
+                    past_question,
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': '*/*'
+                    }
+                });
+                parsed_string = response.data.response;
             }
-            else{
-            let response = await axios.post(API_ENDPOINT, {
-            question:req.query.topic + " problem",
-            past_question,
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': '*/*'
-            }
-        });
-            // console.log(response); 
-            parsed_string=response.data.response;
-            console.log(parsed_string);
-        }
-        // let parsed_string=JSON.parse(response.data.response);
-        // let jsonString = response.data.response.match(/```json([\s\S]*)```/)[1].trim();
 
-        // let parsed_string = JSON.parse(jsonString);
-        if(parsed_string && parsed_string.question){
-        console.log("YEPPP!");
-        req.question=parsed_string.question;
-        req.marks=parseInt(parsed_string.marks);
-        // res.set('question',parsed_string.question);
-        // res.set('marks',parsed_string.marks);
-        // console.log(res.headers);
-        res.render('\answer.ejs',{
-            "data":parsed_string,
-            "topic":req.query.topic,
-            });
-        }
-        else{
-            console.log("NOPEE!!")
-            res.redirect(req.get('referer'));
-        }
-        }
-         catch (err) {
+            if (parsed_string && parsed_string.question) {
+                req.question = parsed_string.question;
+                req.marks = parseInt(parsed_string.marks);
+                res.render('\answer.ejs', {
+                    "data": parsed_string,
+                    "topic": req.query.topic,
+                });
+                return; // Exit the function if successful
+            } else {
+                console.log("Parsed string not found.");
+                retryCount++; // Increment retry count
+            }
+        } catch (err) {
             console.log(err);
+            retryCount++; // Increment retry count
         }
     }
+
+    // If maxRetry attempts failed, redirect to the referrer
+    console.log("Max retry attempts reached.");
+    res.redirect(req.get('referer'));
+}
         static fetchMetaApi=async (req,res)=>{
         try {
                 const Question = req.query.topic;
@@ -143,63 +132,73 @@ class questionController{
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
-    static handleSolution=async (req,res)=>{
+    static handleSolution = async (req, res) => {
+    let retryCount = 0;
+    const maxRetry = 3; // Maximum number of retry attempts
+
+    while (retryCount < maxRetry) {
         try {
-        // Extract data from the form submission
-        
-        console.log(req.body);
-        const {solution,question,marks,final_answer} = req.body;
-        if(!solution){
-            solution="";
-        }
-        if(!final_answer){
-            final_answer="";
-        }
-        // const { question, marks } = req.body;
-        console.log(solution,question,marks,final_answer);
-        // Make POST request to the API
-        const SOLUTION_API=req.SOLUTION_API_ENDPOINT;
-        const response_from_api = await axios.post(SOLUTION_API, {
-            question:question,
-            marks:marks,
-            answer: solution,
-            final_answer:final_answer
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': '*/*'
+            console.log("Attempt:", retryCount + 1);
+            // Extract data from the form submission
+            console.log(req.body);
+            const { solution, question, marks, final_answer } = req.body;
+            if (!solution) {
+                solution = "";
             }
-        });
-        console.log(response_from_api.data);
-         const questionDoc= new questionModel({
-            student_id:req.session._id,
-            question:question,
-            student_response:solution,
-            topic:req.query.topic,
-            total_marks:marks,
-            allocated_marks:response_from_api.data.response.marks_awarded_to_student,
-            feedback:response_from_api.data.response.feedback,
-            final_answer:final_answer
-        })
-        const mongodbSaving=await questionDoc.save();
-        console.log(mongodbSaving);
-        const obj={
-            question:question,
-            marks:marks
+            if (!final_answer) {
+                final_answer = "";
+            }
+
+            // Make POST request to the API
+            const SOLUTION_API = req.SOLUTION_API_ENDPOINT;
+            const response_from_api = await axios.post(SOLUTION_API, {
+                question: question,
+                marks: marks,
+                answer: solution,
+                final_answer: final_answer
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                }
+            });
+            console.log(response_from_api.data);
+            const questionDoc = new questionModel({
+                student_id: req.session._id,
+                question: question,
+                student_response: solution,
+                topic: req.query.topic,
+                total_marks: marks,
+                allocated_marks: response_from_api.data.response.marks_awarded_to_student,
+                feedback: response_from_api.data.response.feedback,
+                final_answer: final_answer
+            })
+            const mongodbSaving = await questionDoc.save();
+            console.log(mongodbSaving);
+            const obj = {
+                question: question,
+                marks: marks
+            }
+            console.log(req.body.topic);
+            res.render('answer.ejs', {
+                "data": obj,
+                "topic": req.body.topic,
+                "abcd": response_from_api.data,
+                "user_solution": solution,
+                "final_answer": final_answer
+            });
+            return; // Exit the function if successful
+        } catch (error) {
+            console.error('Error:', error);
+            retryCount++; // Increment retry count
         }
-        console.log(req.body.topic);
-        res.render('answer.ejs', {
-            "data":obj,
-            "topic":req.body.topic,
-            "abcd":response_from_api.data,
-            "user_solution":solution,
-            "final_answer":final_answer
-        });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
     }
-    }
+
+    // If maxRetry attempts failed, send Internal Server Error response
+    console.log("Max retry attempts reached.");
+    res.status(500).send('Internal Server Error');
+}
+
     static handleMetaSolution=async (req,res)=>{
         try {
         // Extract data from the request
