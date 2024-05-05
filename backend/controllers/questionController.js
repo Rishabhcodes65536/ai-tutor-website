@@ -92,22 +92,51 @@ class questionController{
                 const response = await axios.post(req.API_ENDPOINT, {
                     "question":Question
                 });
-                console.log(response)
+                // console.log(response)
                 let isQuestion= response.data.response.question;
                 if(isQuestion){
                     console.log("yepp");
                 const { question, steps , marks} = response.data.response;
-                console.log(steps)
+                console.log(steps);
+
                 // Pair the steps with their order and sort by order
+                const orderedSteps = steps.sort((a, b) => a.order - b.order);
+                console.log("Ordered_steps="  + JSON.stringify(orderedSteps));
+                // // Shuffle the ordered steps to jumble the order
+                // const shuffledSteps = questionController.shuffleArray(orderedSteps);
+                // const correctOrder=shuffledSteps.map(step => step.order);
+                // const solutionStepsArray = shuffledSteps.map(step => step.solution_step);
+                // Generate random unique indices
                 
-                const orderedSteps = steps;
+                // Generate random permutation from [0, n)
+                const rishabhPerm = [];
+                for (let i = 0; i < orderedSteps.length; i++) {
+                    rishabhPerm.push(i);
+                }
+                for (let i = rishabhPerm.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [rishabhPerm[i], rishabhPerm[j]] = [rishabhPerm[j], rishabhPerm[i]];
+                }
 
-                // Shuffle the ordered steps to jumble the order
-                const shuffledSteps = questionController.shuffleArray(orderedSteps);
-                const correctOrder=shuffledSteps.map(step => step.order);
-                const solutionStepsArray = shuffledSteps.map(step => step.solution_step);
+                // Assign correctOrder as permutation + 1
+                const correctOrder = rishabhPerm.map(index => index + 1);
 
+                // Create a new array of pairs {steps and RishabhPerm}
+                const pairedSteps = orderedSteps.map((step, index) => ({ step, rishabhPerm: rishabhPerm[index] }));
 
+                // Sort by the second element of the pairs
+                pairedSteps.sort((a, b) => a.rishabhPerm - b.rishabhPerm);
+                console.log(rishabhPerm);
+                console.log(pairedSteps);
+                // Iterate through the sorted pairs and construct solutionStepsArray
+                const solutionStepsArray = [];
+                for (const pairedStep of pairedSteps) {
+                    solutionStepsArray.push(pairedStep.step.solution_step);
+                }
+
+                // Log the results
+                console.log(solutionStepsArray);
+                console.log(correctOrder);
                 // Encapsulate each solution_step string in quotes
                 const quotedStrings = solutionStepsArray.map(step => `"${step}"`);
 
