@@ -10,6 +10,7 @@ import doubtRoute from "./routes/doubtRoute.js"
 import metahandlerRoute from "./routes/metaHandlerRoute.js"
 import path from 'path';
 import ejslint from 'ejs-lint'
+import feedbackModel from "./models/feedback.js"
 const __dirname = path.resolve();
 
 dotenv.config();
@@ -69,6 +70,40 @@ app.use("/logout",logoutRoute);
 
 app.use("/dashboard",dashboardRoute);
 app.use("/doubt",doubtRoute);
+
+
+
+app.post("/updateFeedback",async (req,res)=>{
+    console.log("Entering here");
+    const { student_id, feedback , question} = req.body;
+
+    try {
+        // Find the question document by student_id
+       let feedbacks = await feedbackModel.findOne({student_id:student_id,question:question});
+
+
+        if (!feedbacks) {
+            var feedbackdoc = new feedbackModel({
+                student_id,
+                question,
+                solution_step,
+                feedback
+            });
+        }
+
+        // Update feedback
+        question.feedback = feedback;
+
+        // Save the updated question document
+        await feedback.save();
+
+        // Respond with success message
+        return res.json({ message: 'Feedback updated successfully' });
+    } catch (error) {
+        console.error('Error updating feedback:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 
 app.listen(port,() =>{

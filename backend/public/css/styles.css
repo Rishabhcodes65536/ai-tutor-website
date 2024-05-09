@@ -819,7 +819,7 @@ margin-left: 100px;
   left: 0;
   background-color: #2A3891 !important; /* violetish dark color */
   overflow-x: hidden !important;
-  transition: width 0.5s ease !important;
+  /* transition: width 0.5s ease !important; */
   z-index: 1 !important;
   padding:20px !important;
 }
@@ -1194,3 +1194,6 @@ body {
   justify-content: center;
   gap: 2rem;
 }
+
+
+

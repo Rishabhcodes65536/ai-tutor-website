@@ -76,6 +76,12 @@ function goBack() {
                 <div class="api-feedback"><%-abcd.response.feedback%></div>
                  <div class="statement">The solution steps you gave was <%-user_solution%></div>
                 <div class="statement">Your final answer was <%-final_answer%></div>
+                <div class="feedback-buttons">
+                    <!-- Thumbs up button -->
+                    <button class="btn btn-success thumbs-up" onclick="updateFeedback('+1')">👍</button>
+                    <!-- Thumbs down button -->
+                    <button class="btn btn-danger thumbs-down" onclick="updateFeedback('-1')">👎</button>
+                </div>
                 </div>
                 
             <%} else{%>
@@ -85,7 +91,12 @@ function goBack() {
                 <div class="feedback"><%-abcd.response.feedback%></div>
                 <div class="statement">The solution steps you gave was <%-user_solution%></div>
                 <div class="statement">Your final answer was <%-final_answer%></div>
-
+                <div class="feedback-buttons">
+                    <!-- Thumbs up button -->
+                    <button class="btn btn-success thumbs-up" onclick="updateFeedback('+1')">👍</button>
+                    <!-- Thumbs down button -->
+                    <button class="btn btn-danger thumbs-down" onclick="updateFeedback('-1')">👎</button>
+                </div>
             </div>
             <%}%>
             <a class="custom-btn retry-btn" role="button" href="../answer?topic=<%=topic%>&retry=true">Retry</a>
@@ -137,9 +148,30 @@ $(document).ready(function() {
     });
 });
 
-
+function updateFeedback(feedback) {
+        // Make an AJAX request to update the feedback for the student_id
+        // Here you need to replace 'student_id' with the actual student_id of the user
+        fetch('/updateFeedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                student_id: 'student_id', // Replace with the actual student_id
+                feedback: feedback
+            }),
+        })
+        .then(response => {
+            // Handle response
+            console.log(response);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
 
 </script>
+
 
 <%- include("./partials/footer.ejs") %>

@@ -433,3 +433,24 @@ footer .container{
   text-align: center;
   flex-direction: column;
 }
+
+
+/* beta section  */
+
+.beta_nav{
+  background-color: #2A3891;
+}
+
+#beta_button {
+    background-color: #1F52FF;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
