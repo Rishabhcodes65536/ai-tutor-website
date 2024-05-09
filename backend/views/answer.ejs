@@ -91,7 +91,7 @@ function goBack() {
                 <div class="feedback"><%-abcd.response.feedback%></div>
                 <div class="statement">The solution steps you gave was <%-user_solution%></div>
                 <div class="statement">Your final answer was <%-final_answer%></div>
-                <div class="feedback-buttons">
+                <div class="feedback-buttons-wrapper">
                     <!-- Thumbs up button -->
                     <button class="btn btn-success thumbs-up" onclick="updateFeedback('+1')">👍</button>
                     <!-- Thumbs down button -->
@@ -151,15 +151,27 @@ $(document).ready(function() {
 function updateFeedback(feedback) {
         // Make an AJAX request to update the feedback for the student_id
         // Here you need to replace 'student_id' with the actual student_id of the user
+        const studentId = '<%= student_id %>';
+        const question = '<%= data.question %>';
+        const userSolution = '<%= user_solution %>';
+        const finalAnswer = '<%= final_answer %>';
+        const totalMarks = '<%= data.marks %>';
+        const allocatedMarks = '<%= abcd.response.marks_awarded_to_student %>';
+
         fetch('/updateFeedback', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                student_id: 'student_id', // Replace with the actual student_id
-                feedback: feedback
-            }),
+                    student_id: studentId,
+                    question: question,
+                    student_step: userSolution,
+                    student_final: finalAnswer,
+                    total_marks: totalMarks,
+                    allocated_marks: allocatedMarks,
+                    feedback: feedback,
+                }),
         })
         .then(response => {
             // Handle response

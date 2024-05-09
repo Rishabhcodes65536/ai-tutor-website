@@ -210,6 +210,7 @@ class questionController{
             }
             console.log(req.body.topic);
             res.render('answer.ejs', {
+                "student_id":req.session._id,
                 "data": obj,
                 "topic": req.body.topic,
                 "abcd": response_from_api.data,

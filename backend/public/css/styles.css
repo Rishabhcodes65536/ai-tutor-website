@@ -1197,3 +1197,12 @@ body {
 
 
 
+.feedback-buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Adjust margin-top as needed */
+}
+
+.feedback-buttons-wrapper button {
+    margin: 0 5px; /* Adjust margin as needed */
+}

@@ -73,33 +73,36 @@ app.use("/doubt",doubtRoute);
 
 
 
-app.post("/updateFeedback",async (req,res)=>{
-    console.log("Entering here");
-    const { student_id, feedback , question} = req.body;
-
+app.post('/updateFeedback', async (req, res) => {
+    const { student_id, feedback, question, student_step, student_final, total_marks, allocated_marks } = req.body;
+    console.log(req.body);
     try {
-        // Find the question document by student_id
-       let feedbacks = await feedbackModel.findOne({student_id:student_id,question:question});
+        // Find the feedback document by student_id and question
+        let feedbackDoc = await feedbackModel.findOne({ student_id, question });
 
-
-        if (!feedbacks) {
-            var feedbackdoc = new feedbackModel({
+        // If feedback document does not exist, create a new one
+        if (!feedbackDoc) {
+            feedbackDoc = new feedbackModel({
                 student_id,
                 question,
-                solution_step,
+                student_step,
+                student_final,
+                total_marks,
+                allocated_marks,
                 feedback
             });
+        } else {
+            // Update feedback if the document exists
+            feedbackDoc.feedback = feedback;
         }
 
-        // Update feedback
-        question.feedback = feedback;
-
-        // Save the updated question document
-        await feedback.save();
+        // Save the feedback document (either new or updated)
+        await feedbackDoc.save();
 
         // Respond with success message
         return res.json({ message: 'Feedback updated successfully' });
     } catch (error) {
+        // Handle errors
         console.error('Error updating feedback:', error);
         return res.status(500).json({ error: 'Internal server error' });
     }
