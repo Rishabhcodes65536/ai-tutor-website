@@ -10,7 +10,9 @@ import doubtRoute from "./routes/doubtRoute.js"
 import metahandlerRoute from "./routes/metaHandlerRoute.js"
 import path from 'path';
 import ejslint from 'ejs-lint'
+import cors from "cors"
 import feedbackModel from "./models/feedback.js"
+
 const __dirname = path.resolve();
 
 dotenv.config();
@@ -24,6 +26,9 @@ import connectMongo from "connect-mongo";
 const MongoStore = connectMongo(session);
 
 const app=express()
+
+app.use(cors());
+app.use(express.json());
 const port=process.env.PORT || '3000'
 const API_ENDPOINT=process.env.API_ENDPOINT
 const SOLUTION_API_ENDPOINT=process.env.SOLUTION_API_ENDPOINT
@@ -74,7 +79,9 @@ app.use("/doubt",doubtRoute);
 
 
 app.post('/updateFeedback', async (req, res) => {
-    const { student_id, feedback, question, student_step, student_final, total_marks, allocated_marks } = req.body;
+    console.log("entered");
+    console.log(req);
+    const { student_id,question,feedback} = req.body;
     console.log(req.body);
     try {
         // Find the feedback document by student_id and question
@@ -85,11 +92,7 @@ app.post('/updateFeedback', async (req, res) => {
             feedbackDoc = new feedbackModel({
                 student_id,
                 question,
-                student_step,
-                student_final,
-                total_marks,
-                allocated_marks,
-                feedback
+                feedback,
             });
         } else {
             // Update feedback if the document exists
@@ -97,6 +100,7 @@ app.post('/updateFeedback', async (req, res) => {
         }
 
         // Save the feedback document (either new or updated)
+        console.log(feedbackDoc);
         await feedbackDoc.save();
 
         // Respond with success message

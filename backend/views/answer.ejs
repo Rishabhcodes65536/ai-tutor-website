@@ -3,6 +3,7 @@
 </head>
 <body>
 <section class="d-flex align-items-stretch">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 function goBack() {
     console.log("back button clicked");
@@ -148,30 +149,17 @@ $(document).ready(function() {
     });
 });
 
-function updateFeedback(feedback) {
+       async function updateFeedback(feedback) {
         // Make an AJAX request to update the feedback for the student_id
         // Here you need to replace 'student_id' with the actual student_id of the user
-        const studentId = '<%= student_id %>';
-        const question = '<%= data.question %>';
-        const userSolution = '<%= user_solution %>';
-        const finalAnswer = '<%= final_answer %>';
-        const totalMarks = '<%= data.marks %>';
-        const allocatedMarks = '<%= abcd.response.marks_awarded_to_student %>';
-
-        fetch('/updateFeedback', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                    student_id: studentId,
-                    question: question,
-                    student_step: userSolution,
-                    student_final: finalAnswer,
-                    total_marks: totalMarks,
-                    allocated_marks: allocatedMarks,
-                    feedback: feedback,
-                }),
+        const studentId = '<%- student_id %>';
+        const question = '<%- data.question %>';
+        console.log(studentId, question,feedback);
+        // Using Axios for the request
+        axios.post('/updateFeedback', {
+            "student_id": studentId,
+            "question": question,
+            "feedback":feedback
         })
         .then(response => {
             // Handle response
@@ -180,7 +168,8 @@ function updateFeedback(feedback) {
         .catch(error => {
             console.error('Error:', error);
         });
-    }
+
+       }
 
 
 </script>
