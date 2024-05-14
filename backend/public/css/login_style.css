@@ -53,7 +53,7 @@ height: 100%;
   scroll-behavior: smooth;
 }
 
-.header {
+.header,.header_beta {
   color: var(--default-color);
   background-color: var(--background-color);
   padding: 15px 0;
@@ -455,6 +455,7 @@ footer .container{
 
 .beta_nav{
   background-color: #2A3891;
+  /* height: 1200 vh; */
 }
 
 #beta_button {
