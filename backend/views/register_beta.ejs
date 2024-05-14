@@ -2,16 +2,17 @@
 
 <%- include('./partials/beta_navbar.ejs') %>
 <style>
-  .welcome-message {
+.welcome-message {
     /* background-color: #f8f9fa; */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   }
- 
+  
+
   .welcome-message h2 {
     color: #333;
-    font-size: 24px;
+    font-size: 34px;
     margin-bottom: 15px;
   }
 
@@ -35,7 +36,7 @@
   .welcome-message img {
     margin-top: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   }
 
   .form-outline {
@@ -45,6 +46,15 @@
   .text-center {
     margin-top: 20px;
   }
+  .big-text p{
+    font-size: 20px;
+  }
+  .big-text ul li{
+    font-size: 20px;
+  }
+  .big-text h2{
+    font-size: 30px;
+  }
 </style>
 </header>
 <section class="vh-100">
@@ -52,7 +62,7 @@
     <div class="row d-flex justify-content-center align-items-center h-100 beta_container">
       <!-- Left Column with Welcome Message -->
       <div class="col-md-9 col-lg-6 col-xl-5">
-        <div class="welcome-message">
+        <div class="welcome-message big-text">
           <h2>Welcome to Knolly's Beta Test!</h2>
           <p>We're excited to invite you to participate in the beta test of our brand new AI-powered learning platform designed to help you master your studies.</p>
           <ul>

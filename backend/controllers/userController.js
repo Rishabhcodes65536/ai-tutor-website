@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 class userController{
     static home =(req,res)=>{
-        res.render("index.ejs")
+        res.render("login.ejs")
     }
     static register =(req,res)=>{
         res.render("register_beta.ejs")
@@ -28,7 +28,7 @@ class userController{
             })
             const saved=await doc.save();
             console.log(saved)
-            res.redirect('/login')
+            res.redirect('/')
         } catch (error) {
             console.log(error)
         }
