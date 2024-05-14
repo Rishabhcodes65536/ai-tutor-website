@@ -14,6 +14,11 @@ height: 100%;
 }
 }
 
+
+.beta_logo {
+  margin-left: 3.4rem;
+}
+
 :root {
   --default-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Raleway", sans-serif;
@@ -290,7 +295,14 @@ h6 {
   .navmenu .dd-box-shadow {
     box-shadow: 0px 0px 30px rgba(var(--default-color-rgb), 0.15);
   }
+  .beta_logo{
+    margin-left: 4.7vw !important ;
+    /* left:10; */
+  }
 }
+
+
+
 
 /* Mobile Navigation */
 @media (max-width: 1199px) {
@@ -416,6 +428,10 @@ h6 {
 
   .mobile-nav-active .navmenu>ul {
     display: block;
+  }
+
+  .beta_logo {
+   margin-left: 0.4vw !important;
   }
 }
 
