@@ -74,7 +74,10 @@ app.use("/quiz",quizRoute)
 app.use("/logout",logoutRoute);
 
 app.use("/dashboard",dashboardRoute);
-app.use("/doubt",doubtRoute);
+app.use("/doubt",(req,res,next)=>{
+    req.API_ENDPOINT=process.env.DOUBT_API_ENDPOINT;
+    next();
+    },doubtRoute);
 
 
 
@@ -116,3 +119,6 @@ app.post('/updateFeedback', async (req, res) => {
 app.listen(port,() =>{
     console.log(`Server listening at https://localhost:${port}`)
 })
+
+
+
