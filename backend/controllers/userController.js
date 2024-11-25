@@ -3,18 +3,18 @@ import bcrypt from "bcrypt";
 
 class userController{
     static home =(req,res)=>{
-        res.render("index.ejs")
+        res.render("login.ejs")
     }
     static register =(req,res)=>{
-        res.render("register.ejs")
+        res.render("register_beta.ejs")
     }
     static login =(req,res)=>{
-        if (req.session._id) {
-            res.redirect("/dashboard");
-        }
-        else{
-        res.render("login.ejs");
-        }
+        // if (req.session._id) {
+        //     res.redirect("/dashboard");
+        // }
+        // else{
+        res.render("login_beta.ejs");
+        // }
     }
     static createUserDoc = async (req,res) =>{
         try {
@@ -28,7 +28,7 @@ class userController{
             })
             const saved=await doc.save();
             console.log(saved)
-            res.redirect('/login')
+            res.redirect('/')
         } catch (error) {
             console.log(error)
         }
@@ -46,7 +46,7 @@ class userController{
                         req.session.name= kkk.name;
                         req.session.student_id=kkk.student_id;
                         res.set('user_id', kkk._id);
-                        res.redirect(`/dashboard`);
+                        res.redirect(`/doubt`);
                     }
                     else{
                     res.send(`<h1>Incorrect password</h1>`)

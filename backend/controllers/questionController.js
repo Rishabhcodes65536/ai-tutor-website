@@ -67,6 +67,7 @@ class questionController{
                 req.question = parsed_string.question;
                 req.marks = parseInt(parsed_string.marks);
                 res.render('\answer.ejs', {
+                    "student_id":req.session._id,
                     "data": parsed_string,
                     "topic": req.query.topic,
                 });
@@ -210,6 +211,7 @@ class questionController{
             }
             console.log(req.body.topic);
             res.render('answer.ejs', {
+                "student_id":req.session._id,
                 "data": obj,
                 "topic": req.body.topic,
                 "abcd": response_from_api.data,

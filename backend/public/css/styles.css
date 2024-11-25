@@ -812,14 +812,14 @@ margin-left: 100px;
 }
 
 .sidebar {
-  width: 110px; /* Adjust width as needed */
+  width: 135px; /* Adjust width as needed */
   height: 100% !important;
   position: fixed !important;
   top: 0;
   left: 0;
   background-color: #2A3891 !important; /* violetish dark color */
   overflow-x: hidden !important;
-  transition: width 0.5s ease !important;
+  /* transition: width 0.5s ease !important; */
   z-index: 1 !important;
   padding:20px !important;
 }
@@ -1194,3 +1194,16 @@ body {
   justify-content: center;
   gap: 2rem;
 }
+
+
+
+.feedback-buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Adjust margin-top as needed */
+}
+
+.feedback-buttons-wrapper button {
+    margin: 0 5px; /* Adjust margin as needed */
+}
+

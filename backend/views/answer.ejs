@@ -3,6 +3,7 @@
 </head>
 <body>
 <section class="d-flex align-items-stretch">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 function goBack() {
     console.log("back button clicked");
@@ -76,6 +77,12 @@ function goBack() {
                 <div class="api-feedback"><%-abcd.response.feedback%></div>
                  <div class="statement">The solution steps you gave was <%-user_solution%></div>
                 <div class="statement">Your final answer was <%-final_answer%></div>
+                <div class="feedback-buttons">
+                    <!-- Thumbs up button -->
+                    <button class="btn btn-success thumbs-up" onclick="updateFeedback('+1')">👍</button>
+                    <!-- Thumbs down button -->
+                    <button class="btn btn-danger thumbs-down" onclick="updateFeedback('-1')">👎</button>
+                </div>
                 </div>
                 
             <%} else{%>
@@ -85,7 +92,12 @@ function goBack() {
                 <div class="feedback"><%-abcd.response.feedback%></div>
                 <div class="statement">The solution steps you gave was <%-user_solution%></div>
                 <div class="statement">Your final answer was <%-final_answer%></div>
-
+                <div class="feedback-buttons-wrapper">
+                    <!-- Thumbs up button -->
+                    <button class="btn btn-success thumbs-up" onclick="updateFeedback('+1')">👍</button>
+                    <!-- Thumbs down button -->
+                    <button class="btn btn-danger thumbs-down" onclick="updateFeedback('-1')">👎</button>
+                </div>
             </div>
             <%}%>
             <a class="custom-btn retry-btn" role="button" href="../answer?topic=<%=topic%>&retry=true">Retry</a>
@@ -137,9 +149,30 @@ $(document).ready(function() {
     });
 });
 
+       async function updateFeedback(feedback) {
+        // Make an AJAX request to update the feedback for the student_id
+        // Here you need to replace 'student_id' with the actual student_id of the user
+        const studentId = '<%- student_id %>';
+        const question = '<%- data.question %>';
+        console.log(studentId, question,feedback);
+        // Using Axios for the request
+        axios.post('/updateFeedback', {
+            "student_id": studentId,
+            "question": question,
+            "feedback":feedback
+        })
+        .then(response => {
+            // Handle response
+            console.log(response);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
+       }
 
 
 </script>
+
 
 <%- include("./partials/footer.ejs") %>

@@ -1,19 +1,86 @@
 <%- include('./partials/login_header.ejs') %>
-<%- include('./partials/navbar.ejs') %>
 
-<section class="vh-300">
+<%- include('./partials/beta_navbar.ejs') %>
+<style>
+.welcome-message {
+    /* background-color: #f8f9fa; */
+    padding: 20px;
+    border-radius: 10px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  }
+  
+
+  .welcome-message h2 {
+    color: #333;
+    font-size: 34px;
+    margin-bottom: 15px;
+  }
+
+  .welcome-message p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .welcome-message ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+  }
+
+  .welcome-message ul li {
+    color: #666;
+    font-size: 16px;
+    list-style-type: disc;
+  }
+
+  .welcome-message img {
+    margin-top: 20px;
+    border-radius: 10px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  }
+
+  .form-outline {
+    margin-bottom: 20px;
+  }
+
+  .text-center {
+    margin-top: 20px;
+  }
+  .big-text p{
+    font-size: 20px;
+  }
+  .big-text ul li{
+    font-size: 20px;
+  }
+  .big-text h2{
+    font-size: 30px;
+  }
+</style>
+</header>
+<section class="vh-100">
   <div class="container-fluid h-custom">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-6 col-xl-5">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-          class="img-fluid" alt="Sample image">
+    <div class="row d-flex justify-content-center h-100 beta_container">
+      <!-- Left Column with Welcome Message -->
+      <div class="col-md-9 col-lg-6 col-xl-6">
+        <div class="welcome-message big-text">
+          <h2>Welcome to Knolly's Beta Test!</h2>
+          <p>We're excited to invite you to participate in the beta test of our brand new AI-powered learning platform designed to help you master your studies.</p>
+          <ul>
+            <li>Interactive quizzes to test your understanding</li>
+            <li>Step-by-step guidance to solve problems effectively</li>
+            <li>An intelligent AI tutor to answer your questions</li>
+          </ul>
+          <p>Ready to join the adventure?</p>
+          <img src="/assets/img/LoginPage.svg" class="img-fluid" alt="Sample image">
+        </div>
       </div>
-      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+      <!-- Right Column with Form -->
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 welcome-message">
         <form method="post">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="mb-0">Register</h2>
-            
           </div>
+
           <!-- Name input -->
           <div data-mdb-input-init class="form-outline mb-4">
             <input type="text" id="name" class="form-control form-control-lg" name="name"
@@ -59,5 +126,11 @@
     </div>
   </div>
 </section>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
 
 <%- include('./partials/footer.ejs') %>

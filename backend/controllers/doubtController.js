@@ -9,6 +9,7 @@ class doubtController{
 static showDoubtsPrompt = async(req, res) =>{
   try {
     // Render the doubts prompting page
+    console.log("Entered here")
     const recentDoubts = await Doubt.find({ student_id: req.session._id })
       .sort({ timestamp: -1 }) // Sort by timestamp in descending order
       .limit(5);
@@ -31,7 +32,7 @@ static showSavedDoubtSummary = async (req, res) => {
     console.log(req.query);
     var response_type_follow=req.query.response_type;
     console.log(response_type_follow);
-    let response = await axios.post('http://20.42.62.249:8081/internal/question_generation/analyse/chat', {
+    let response = await axios.post(req.API_ENDPOINT, {
       question,
       student_id:req.session._id,
       student_name:req.session.name,
@@ -57,7 +58,7 @@ static fetchSummary=async (req, res)=> {
     console.log(req.query);
     var response_type_new=req.query.response_type;
     console.log(response_type_new)
-    const response = await axios.post('http://20.42.62.249:8081/internal/question_generation/analyse/chat', {
+    const response = await axios.post(req.API_ENDPOINT, {
       question,
       student_id,
       student_name:req.session.name,

@@ -14,6 +14,11 @@ height: 100%;
 }
 }
 
+
+.beta_logo {
+  margin-left: 3.4rem;
+}
+
 :root {
   --default-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Raleway", sans-serif;
@@ -48,7 +53,7 @@ height: 100%;
   scroll-behavior: smooth;
 }
 
-.header {
+.header,.header_beta {
   color: var(--default-color);
   background-color: var(--background-color);
   padding: 15px 0;
@@ -290,7 +295,14 @@ h6 {
   .navmenu .dd-box-shadow {
     box-shadow: 0px 0px 30px rgba(var(--default-color-rgb), 0.15);
   }
+  .beta_logo{
+    margin-left: 4.7vw !important ;
+    /* left:10; */
+  }
 }
+
+
+
 
 /* Mobile Navigation */
 @media (max-width: 1199px) {
@@ -417,6 +429,10 @@ h6 {
   .mobile-nav-active .navmenu>ul {
     display: block;
   }
+
+  .beta_logo {
+   margin-left: 0.4vw !important;
+  }
 }
 
 
@@ -433,3 +449,25 @@ footer .container{
   text-align: center;
   flex-direction: column;
 }
+
+
+/* beta section  */
+
+.beta_nav{
+  background-color: #2A3891;
+  /* height: 1200 vh; */
+}
+
+#beta_button {
+    background-color: #1F52FF;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
